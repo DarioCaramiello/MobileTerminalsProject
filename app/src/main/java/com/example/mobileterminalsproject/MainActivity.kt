@@ -47,104 +47,80 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun Main() {
 
-        // Hierarchy Root Box - Box that encompasses all of the UI
         Box(
-
             Modifier
-                .background(Color.LightGray)
-                .fillMaxSize()) {
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.Green)
 
-            // Component UI for API
-            Box(
-                Modifier
-                    .align(Alignment.Center)
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .background(Color.White)) {
-                Box(
-                    Modifier
-                        .align(Alignment.Center)) {
-                    Text(
-                        text = "API",
-                        color = Color.Red,
-                        fontSize = 32.sp
-                    )
+
+        ) {
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                val id = remember {
+                    mutableStateOf(TextFieldValue())
                 }
-            }
 
-            Box() {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    val id = remember {
-                        mutableStateOf(TextFieldValue())
-                    }
-
-                    val profile = remember {
-                        mutableStateOf(ProfileModelApi1(
+                val profile = remember {
+                    mutableStateOf(
+                        ProfileModelApi1(
                             age = "",
                             name = "",
                             email = ""
-                        ))
-                    }
-
-                    Text(
-                        text="API Sample",
-                        style= TextStyle(
-                            fontSize = 40.sp,
-                            fontFamily = FontFamily.Cursive
                         )
                     )
+                }
 
-                    Spacer(modifier = Modifier.height(15.dp))
-
-                    TextField(
-                        label = { Text(text = "User ID")},
-                        value = id.value,
-                        onValueChange = { id.value = it }
+                Text(
+                    text = "API Sample",
+                    style = TextStyle(
+                        fontSize = 40.sp,
+                        fontFamily = FontFamily.Cursive
                     )
+                )
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(15.dp))
 
-                    Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                        Button(
-                            onClick = {
-                                val data = sendRequest(
-                                    id = id.value.text,
-                                    profileState = profile
-                                )
+                TextField(
+                    label = { Text(text = "User ID") },
+                    value = id.value,
+                    onValueChange = { id.value = it }
+                )
 
-                                Log.d("Main Activity", profile.toString())
-                            }
-                        ) {
-                            Text(text = "Get Data")
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+                    Button(
+                        onClick = {
+                            val data = sendRequest(
+                                id = id.value.text,
+                                profileState = profile
+                            )
+
+                            Log.d("Main Activity", profile.toString())
                         }
+                    ) {
+                        Text(text = "Get Data")
                     }
-
-                    Spacer(modifier = Modifier.height(15.dp))
-
-                    Text(text = profile.component1().toString(), fontSize = 40.sp)
                 }
-            }
 
-            // Component UI for project name
-            Box(
-                Modifier
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .background(Color.Green)) {
-                Box(
-                    Modifier
-                        .align(Alignment.Center)) {
-                    Text(text = "ANDROID")
-                }
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Text(text = profile.component1().toString(), fontSize = 40.sp)
             }
         }
     }
 
-    fun sendRequest(
+
+
+
+
+    private fun sendRequest(
         id: String,
         profileState: MutableState<ProfileModelApi1>
     ) {
