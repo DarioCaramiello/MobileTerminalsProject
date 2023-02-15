@@ -1,10 +1,10 @@
 package com.example.mobileterminalsproject.network
 
-/*
-import com.example.apiexample.ProfileModel
-import com.example.apiexample.UserModel
 
- */
+import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
+import com.example.mobileterminalsproject.data_models_network.UserModelApi1
+
+
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -19,5 +19,5 @@ public interface ApiServices {
         "Accept: application/json"
     )
     @GET("users/{id}")
-    abstract fun getUserById(@Path("id") id: String): Call<UserModel?>?
+    abstract fun getUserById(@Path("id") id: String): Call<UserModelApi1?>?
 }

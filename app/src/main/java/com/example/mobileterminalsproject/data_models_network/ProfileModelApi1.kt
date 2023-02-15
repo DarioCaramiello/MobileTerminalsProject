@@ -1,4 +1,7 @@
 package com.example.mobileterminalsproject.data_models_network
 
-class ProfileModelApi1 {
-}
+data class ProfileModelApi1 (
+    var age: String,
+    var name: String,
+    var email: String,
+)
