@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,14 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
-import com.example.mobileterminalsproject.data_models_network.UserModelApi1
-import com.example.mobileterminalsproject.network.ApiServices
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+
 //Retrofit
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -69,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 ) {
 
                 }
+
                 val id = remember {
                     mutableStateOf(TextFieldValue())
                 }
@@ -82,6 +79,10 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                 }
+
+
+
+                var response : Response? = null
 
                 Text(
                     text = "API Sample",
@@ -104,11 +105,11 @@ class MainActivity : AppCompatActivity() {
                 Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                     Button(
                         onClick = {
-                            val data = sendRequest(
+                            val response = sendRequest()
+                            /*val data = sendRequest(
                                 id = id.value.text,
                                 profileState = profile
-                            )
-
+                             */
                             Log.d("Main Activity", profile.toString())
                         }
                     ) {
@@ -118,21 +119,21 @@ class MainActivity : AppCompatActivity() {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                Text(text = profile.component1().toString(), fontSize = 40.sp)
+                //Text(text = profile.component1().toString(), fontSize = 40.sp)
+                Text(text = response.toString(), fontSize = 30.sp)
+
             }
         }
     }
 
 
-
-
-
+    /*
     private fun sendRequest(
         id: String,
         profileState: MutableState<ProfileModelApi1>
     ) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.109:3000")
+            .baseUrl("https://192.168.0.109:3000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -152,6 +153,24 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Main", "Failed mate " + t.message.toString())
             }
         })
+    }
+
+ */
+    private fun sendRequest(): okhttp3.Response {
+        val client = OkHttpClient()
+
+        val request = Request.Builder()
+            .url("https://daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com/api/co2-api")
+            .get()
+            .addHeader("X-RapidAPI-Key", "01028bfd38msh891033d63ee7bedp1b2c18jsn50e742c22515")
+            .addHeader(
+                "X-RapidAPI-Host",
+                "daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com"
+            )
+            .build()
+
+        return client.newCall(request).execute()
+
     }
 
     // allows you to have a preview without emulating the device

@@ -18,6 +18,6 @@ public interface ApiServices {
     @Headers(
         "Accept: application/json"
     )
-    @GET("users/{id}")
+    @GET("/users/{id}")
     abstract fun getUserById(@Path("id") id: String): Call<UserModelApi1?>?
 }
