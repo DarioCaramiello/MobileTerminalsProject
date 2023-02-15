@@ -23,12 +23,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
+import com.fasterxml.jackson.databind.ObjectMapper
 //okhttp3
 import okhttp3.*
 import java.io.IOException
 import java.time.Month
 import java.time.MonthDay
 import java.time.Year
+import kotlin.reflect.typeOf
 
 
 class MainActivity : AppCompatActivity() {
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
+                /*
                 val profile = remember {
                     mutableStateOf(
                         ProfileModelApi1(
@@ -69,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                 }
+                 */
 
                 TopAppBar(
                     elevation = 4.dp,
@@ -106,31 +110,43 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun sendRequest() {
         val client = OkHttpClient()
         val request = Request.Builder()
             .url("https://daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com/api/co2-api")
             .get()
             .addHeader("X-RapidAPI-Key", "01028bfd38msh891033d63ee7bedp1b2c18jsn50e742c22515")
-            .addHeader(
-                "X-RapidAPI-Host",
-                "daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com"
-            )
+            .addHeader("X-RapidAPI-Host", "daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com")
             .build()
 
+
         client.newCall(request).enqueue(object : Callback {
+            
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("OkHttp", "Api Fallita")
             }
 
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
-                    Log.d("OkHttp", response.toString())
+                    response.body?.let { Log.d("OkHttp", it.string()) }
+                    // -- da vedere -- parser string con Jeckson
+                    // -- problema : la linea di codice sotto converte un singolo elemento json in una classe.
+                    // Il problema è che il contenuto della risposta è un'array di oggetti Json
+                    /*
+                    val person = ObjectMapper().readValue(response.body?.string(), ProfileModelApi1::class.java)
+                    Log.d("OkHttp", person.day.toString())
+
+                     */
+
                 } else {
                     Log.d("OkHttp","Api Riuscita - Null")
                 }
             }
         })
+
+
+
     }
 
     // allows you to have a preview without emulating the device

@@ -1,9 +1,10 @@
 package com.example.mobileterminalsproject.data_models_network
 
-
+/*
 import java.time.Month
 import java.time.MonthDay
 import java.time.Year
+
 
 data class ProfileModelApi1 (
     var year: Year,
@@ -12,3 +13,17 @@ data class ProfileModelApi1 (
     var cycle: Float,
     var trend: Float,
 )
+ */
+
+
+class ProfileModelApi1 {
+    var year: String? = null
+    var month: String? = null
+    var day: String? = null
+    var cycle: String? = null
+    var trend: String? = null
+
+    override fun toString() : String {
+        return "ProfileModelApi1(year=$year, month=$month, day=$day, cycle=$cycle, trend=$trend)"
+    }
+}
