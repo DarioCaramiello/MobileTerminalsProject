@@ -37,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         // Hierarchy Root Box - Box that encompasses all of the UI
         Box(
 
-            // Component UI for API
             Modifier
                 .background(Color.LightGray)
                 .fillMaxSize()) {
+            // Component UI for API
             Box(
                 Modifier
                     .align(Alignment.Center)
