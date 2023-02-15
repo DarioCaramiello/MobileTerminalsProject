@@ -30,14 +30,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     // 'Composable' - Allows function components to be rendered as UI components
     @Composable
     fun Main() {
 
         // Hierarchy Root Box - Box that encompasses all of the UI
         Box(
+
+            // Component UI for API
             Modifier
                 .background(Color.LightGray)
                 .fillMaxSize()) {
@@ -55,10 +55,10 @@ class MainActivity : AppCompatActivity() {
                         color = Color.Red,
                         fontSize = 32.sp
                     )
-
                 }
             }
 
+            // Component UI for project name
             Box(
                 Modifier
                     .height(50.dp)
