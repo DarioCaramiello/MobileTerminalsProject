@@ -12,6 +12,8 @@ import androidx.compose.material.Button
 import androidx.compose.material3.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,9 +22,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
 //okhttp3
 import okhttp3.*
 import java.io.IOException
+import java.time.Month
+import java.time.MonthDay
+import java.time.Year
 
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +57,19 @@ class MainActivity : AppCompatActivity() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                
+
+                val profile = remember {
+                    mutableStateOf(
+                        ProfileModelApi1(
+                            year = Year.now(),
+                            month = Month.JANUARY,
+                            day = MonthDay.now(),
+                            cycle = Float.NaN,
+                            trend = Float.NaN
+                        )
+                    )
+                }
+
                 TopAppBar(
                     elevation = 4.dp,
                     backgroundColor = Color.Black,
