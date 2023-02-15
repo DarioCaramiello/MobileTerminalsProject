@@ -2,6 +2,8 @@ package com.example.mobileterminalsproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
+// for Jetpack Compose
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +16,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+// for Retrofit
+import com.example.mobileterminalsproject.network.ApiServices
+import com.example.mobileterminalsproject.network.RetrofitService
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,15 +30,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     // 'Composable' - Allows function components to be rendered as UI components
     @Composable
     fun Main() {
+
         // Hierarchy Root Box - Box that encompasses all of the UI
         Box(
             Modifier
                 .background(Color.LightGray)
                 .fillMaxSize()) {
-
             Box(
                 Modifier
                     .align(Alignment.Center)
@@ -45,8 +55,8 @@ class MainActivity : AppCompatActivity() {
                         color = Color.Red,
                         fontSize = 32.sp
                     )
-                }
 
+                }
             }
 
             Box(
