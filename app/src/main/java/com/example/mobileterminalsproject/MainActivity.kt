@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.dp
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
         setContent {
             Main()
         }
     }
 
+    // 'Composable' - permette ai componenti della funzione di visualizzare come componenti dell UI
     @Composable
     fun Main() {
         Box(
