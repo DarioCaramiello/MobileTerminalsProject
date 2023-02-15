@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     // 'Composable' - Allows function components to be rendered as UI components
     @Composable
-
     fun Main() {
 
         // Hierarchy Root Box - Box that encompasses all of the UI
