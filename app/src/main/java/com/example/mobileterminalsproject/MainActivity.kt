@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 'Composable' - permette ai componenti della funzione di visualizzare come componenti dell UI
+    // 'Composable' - Allows function components to be rendered as UI components
     @Composable
     fun Main() {
         Box(
@@ -31,13 +32,17 @@ class MainActivity : AppCompatActivity() {
             Box(
                 Modifier
                     .align(Alignment.Center)
-                    .height(40.dp)
+                    .wrapContentHeight()
                     .fillMaxWidth()
                     .background(Color.White)) {
                 Box(
                     Modifier
                         .align(Alignment.Center)) {
-                    Text(text = "API")
+                    Text(
+                        text = "API",
+                        color = Color.Red,
+                        fontSize = 32.sp
+                    )
                 }
 
             }
@@ -57,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // permette di avere una preview senza emulare il device
+    // allows you to have a preview without emulating the device
     @Preview
     @Composable
     fun PreviewMain() {
