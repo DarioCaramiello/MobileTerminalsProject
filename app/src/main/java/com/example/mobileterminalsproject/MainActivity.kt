@@ -16,11 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// for Retrofit
-import com.example.mobileterminalsproject.network.ApiServices
-import com.example.mobileterminalsproject.network.RetrofitService
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             Modifier
                 .background(Color.LightGray)
                 .fillMaxSize()) {
+
             // Component UI for API
             Box(
                 Modifier
