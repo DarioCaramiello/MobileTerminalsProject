@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material3.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -61,7 +62,13 @@ class MainActivity : AppCompatActivity() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                
+                TopAppBar(
+                    elevation = 4.dp,
+                    backgroundColor = Color.Black,
+                ) {
 
+                }
                 val id = remember {
                     mutableStateOf(TextFieldValue())
                 }
