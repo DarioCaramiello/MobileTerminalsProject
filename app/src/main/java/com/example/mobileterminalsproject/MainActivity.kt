@@ -1,19 +1,17 @@
 package com.example.mobileterminalsproject
 
-import androidx.appcompat.app.AppCompatActivity
+//Jetpack Compose
+//okhttp3
 import android.os.Bundle
 import android.util.Log
-
-//Jetpack Compose
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material3.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,15 +20,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mobileterminalsproject.data_models_network.Co2Class
 import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
 import com.fasterxml.jackson.databind.ObjectMapper
-//okhttp3
+import com.google.firebase.firestore.util.Assert
 import okhttp3.*
 import java.io.IOException
-import java.time.Month
-import java.time.MonthDay
-import java.time.Year
-import kotlin.reflect.typeOf
 
 
 class MainActivity : AppCompatActivity() {
@@ -72,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                 }
-                 */
+                */
 
                 TopAppBar(
                     elevation = 4.dp,
@@ -120,9 +115,17 @@ class MainActivity : AppCompatActivity() {
             .addHeader("X-RapidAPI-Host", "daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com")
             .build()
 
+        /*
+        val objectMapper = ObjectMapper()
+        val responseBody = client.newCall(request).execute().body
+        val entity: ProfileModelApi1 =
+            objectMapper.readValue(responseBody!!.string(), ProfileModelApi1::class.java)
+         */
+
+
 
         client.newCall(request).enqueue(object : Callback {
-            
+
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("OkHttp", "Api Fallita")
             }
@@ -130,14 +133,15 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
                     response.body?.let { Log.d("OkHttp", it.string()) }
-                    // -- da vedere -- parser string con Jeckson
+                    // -- da vedere -- parser string con Jackson
                     // -- problema : la linea di codice sotto converte un singolo elemento json in una classe.
                     // Il problema è che il contenuto della risposta è un'array di oggetti Json
-                    /*
-                    val person = ObjectMapper().readValue(response.body?.string(), ProfileModelApi1::class.java)
-                    Log.d("OkHttp", person.day.toString())
 
-                     */
+                    //val entity = ObjectMapper().readValue(response.body?.string(), Co2Class::class.java)
+                    Log.d("OkHttp", "wonoruferu")
+
+                    //val objectMapper = ObjectMapper()
+                    //response.body?.charStream()
 
                 } else {
                     Log.d("OkHttp","Api Riuscita - Null")

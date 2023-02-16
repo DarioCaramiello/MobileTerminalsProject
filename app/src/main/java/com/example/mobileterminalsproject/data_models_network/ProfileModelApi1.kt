@@ -1,11 +1,16 @@
 package com.example.mobileterminalsproject.data_models_network
 
-/*
 import java.time.Month
 import java.time.MonthDay
 import java.time.Year
+import kotlin.collections.List
+
+class ProfileModelApi1 {
+    val co2List = listOf<Co2Class>()
+}
 
 
+/*
 data class ProfileModelApi1 (
     var year: Year,
     var month: Month,
@@ -13,9 +18,10 @@ data class ProfileModelApi1 (
     var cycle: Float,
     var trend: Float,
 )
- */
+*/
 
 
+/*
 class ProfileModelApi1 {
     var year: String? = null
     var month: String? = null
@@ -27,3 +33,5 @@ class ProfileModelApi1 {
         return "ProfileModelApi1(year=$year, month=$month, day=$day, cycle=$cycle, trend=$trend)"
     }
 }
+*/
+
