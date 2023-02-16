@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
-                    response.body?.let { Log.d("OkHttp", it.string()) }
+                    response.body?.let { Log.d("OkHttp", it.string()/*.substring(8)*/) }
                     // -- da vedere -- parser string con Jackson
                     // -- problema : la linea di codice sotto converte un singolo elemento json in una classe.
                     // Il problema è che il contenuto della risposta è un'array di oggetti Json
