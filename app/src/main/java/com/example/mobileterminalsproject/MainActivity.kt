@@ -28,6 +28,7 @@ import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
+var x : JSONObject? = null
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     // 'Composable' - Allows function components to be rendered as UI components
     @Composable
     fun Main() {
-
         Box(
             Modifier
                 .fillMaxWidth()
@@ -134,13 +134,13 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
                     response.body?.let {
-                        val x = JSONObject(it.string())
+                        x = JSONObject(it.string())
                         Log.d("OkHttp", x.toString())
                     }
                     // -- da vedere -- parser string con Jackson
                     // -- problema : la linea di codice sotto converte un singolo elemento json in una classe.
                     // Il problema è che il contenuto della risposta è un'array di oggetti Json
-                    //val entity = ObjectMapper().readValue(response.body?.string(), Co2Class::class.java)
+                    val entity = ObjectMapper().readValue(response.body?.string(), Co2Class::class.java)
 
 
 
