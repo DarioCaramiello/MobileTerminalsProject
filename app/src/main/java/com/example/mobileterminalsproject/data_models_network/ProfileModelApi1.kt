@@ -33,5 +33,17 @@ class ProfileModelApi1 {
         return "ProfileModelApi1(year=$year, month=$month, day=$day, cycle=$cycle, trend=$trend)"
     }
 }
+ */
+
+
+data class ProfileModelApi1(
+    val id: String,
+    val abbreviation: String,
+    val city: String,
+    val conference: String,
+    val division: String,
+    val full_name: String,
+    val name: String
+)
 */
 

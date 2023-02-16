@@ -23,8 +23,9 @@ import androidx.compose.ui.unit.sp
 import com.example.mobileterminalsproject.data_models_network.Co2Class
 import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.firebase.firestore.util.Assert
+//import com.google.firebase.firestore.util.Assert
 import okhttp3.*
+import org.json.JSONObject
 import java.io.IOException
 
 
@@ -132,16 +133,16 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
-                    response.body?.let { Log.d("OkHttp", it.string()/*.substring(8)*/) }
+                    response.body?.let {
+                        val x = JSONObject(it.string())
+                        Log.d("OkHttp", x.toString())
+                    }
                     // -- da vedere -- parser string con Jackson
                     // -- problema : la linea di codice sotto converte un singolo elemento json in una classe.
                     // Il problema è che il contenuto della risposta è un'array di oggetti Json
-
                     //val entity = ObjectMapper().readValue(response.body?.string(), Co2Class::class.java)
-                    Log.d("OkHttp", "wonoruferu")
 
-                    //val objectMapper = ObjectMapper()
-                    //response.body?.charStream()
+
 
                 } else {
                     Log.d("OkHttp","Api Riuscita - Null")
