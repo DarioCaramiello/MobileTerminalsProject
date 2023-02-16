@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobileterminalsproject.data_models_network.Co2Class
 import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
+import com.example.mobileterminalsproject.data_models_network.ProfileModelApi2
 import com.fasterxml.jackson.databind.ObjectMapper
 //import com.google.firebase.firestore.util.Assert
 import okhttp3.*
@@ -109,11 +110,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendRequest() {
         val client = OkHttpClient()
+
         val request = Request.Builder()
-            .url("https://daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com/api/co2-api")
+            .url("https://free-nba.p.rapidapi.com/teams/1")
             .get()
-            .addHeader("X-RapidAPI-Key", "01028bfd38msh891033d63ee7bedp1b2c18jsn50e742c22515")
-            .addHeader("X-RapidAPI-Host", "daily-atmosphere-carbon-dioxide-concentration.p.rapidapi.com")
+            .addHeader("X-RapidAPI-Key", "959aee617dmsh51ae45fcec13ee1p18df9fjsnb033b4a917d7")
+            .addHeader("X-RapidAPI-Host", "free-nba.p.rapidapi.com")
             .build()
 
         /*
@@ -140,7 +142,8 @@ class MainActivity : AppCompatActivity() {
                     // -- da vedere -- parser string con Jackson
                     // -- problema : la linea di codice sotto converte un singolo elemento json in una classe.
                     // Il problema è che il contenuto della risposta è un'array di oggetti Json
-                    val entity = ObjectMapper().readValue(response.body?.string(), Co2Class::class.java)
+                    val entity = ObjectMapper().readValue(x.toString(), ProfileModelApi2::class.java)
+                    Log.d("OkHttp", entity.city.toString())
 
 
 
