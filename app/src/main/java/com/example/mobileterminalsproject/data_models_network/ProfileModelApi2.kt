@@ -1,20 +1,20 @@
 package com.example.mobileterminalsproject.data_models_network
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 
 data class ProfileModelApi2(
-    @JsonProperty("id")
+    @SerializedName("id")
     var id: String?,
-    @JsonProperty("abbreviation")
+    @SerializedName("abbreviation")
     var abbreviation: String?,
-    @JsonProperty("city")
+    @SerializedName("city")
     var city: String?,
-    @JsonProperty("conference")
+    @SerializedName("conference")
     var conference: String?,
-    @JsonProperty("division")
+    @SerializedName("division")
     var division: String?,
-    @JsonProperty("full_name")
+    @SerializedName("full_name")
     var full_name: String?,
-    @JsonProperty("name")
+    @SerializedName("name")
     var name: String?
 )
