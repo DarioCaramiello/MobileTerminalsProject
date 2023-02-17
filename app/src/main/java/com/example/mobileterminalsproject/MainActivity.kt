@@ -1,7 +1,6 @@
 package com.example.mobileterminalsproject
 
-//Jetpack Compose
-//okhttp3
+//Jetpack Compose - okhttp3
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
@@ -20,11 +19,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mobileterminalsproject.data_models_network.Co2Class
-import com.example.mobileterminalsproject.data_models_network.ProfileModelApi1
 import com.example.mobileterminalsproject.data_models_network.ProfileModelApi2
 import com.fasterxml.jackson.databind.ObjectMapper
-//import com.google.firebase.firestore.util.Assert
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -47,8 +43,6 @@ class MainActivity : AppCompatActivity() {
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(Color.Green)
-
-
         ) {
 
             Column(
@@ -56,20 +50,6 @@ class MainActivity : AppCompatActivity() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                /*
-                val profile = remember {
-                    mutableStateOf(
-                        ProfileModelApi1(
-                            year = Year.now(),
-                            month = Month.JANUARY,
-                            day = MonthDay.now(),
-                            cycle = Float.NaN,
-                            trend = Float.NaN
-                        )
-                    )
-                }
-                */
 
                 TopAppBar(
                     elevation = 4.dp,
@@ -99,10 +79,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
-
-                //Text(text = profile.component1().toString(), fontSize = 40.sp)
-                //Text(text = response.toString(), fontSize = 30.sp)
-
             }
         }
     }
@@ -118,15 +94,6 @@ class MainActivity : AppCompatActivity() {
             .addHeader("X-RapidAPI-Host", "free-nba.p.rapidapi.com")
             .build()
 
-        /*
-        val objectMapper = ObjectMapper()
-        val responseBody = client.newCall(request).execute().body
-        val entity: ProfileModelApi1 =
-            objectMapper.readValue(responseBody!!.string(), ProfileModelApi1::class.java)
-         */
-
-
-
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
@@ -139,22 +106,15 @@ class MainActivity : AppCompatActivity() {
                         x = JSONObject(it.string())
                         Log.d("OkHttp", x.toString())
                     }
-                    // -- da vedere -- parser string con Jackson
-                    // -- problema : la linea di codice sotto converte un singolo elemento json in una classe.
-                    // Il problema è che il contenuto della risposta è un'array di oggetti Json
+
                     val entity = ObjectMapper().readValue(x.toString(), ProfileModelApi2::class.java)
                     Log.d("OkHttp", entity.city.toString())
-
-
 
                 } else {
                     Log.d("OkHttp","Api Riuscita - Null")
                 }
             }
         })
-
-
-
     }
 
     // allows you to have a preview without emulating the device
