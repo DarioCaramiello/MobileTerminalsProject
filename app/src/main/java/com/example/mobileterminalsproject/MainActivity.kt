@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         val client = OkHttpClient()
 
         val request = Request.Builder()
-            .url("https://youtube-video-download-info.p.rapidapi.com/dl?id=50VwlF8DeUQ")
+            .url("https://youtube-video-download-info.p.rapidapi.com/dl?id=7NK_JOkuSVY")
             .get()
             .addHeader("X-RapidAPI-Key", "cfbc210f66msh93725be4ee82e18p14e451jsn7fcfa38e4432")
             .addHeader("X-RapidAPI-Host", "youtube-video-download-info.p.rapidapi.com")
@@ -109,7 +109,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     val entity = ObjectMapper().readValue(x.toString(), ProfileModelYoutubeDownloadApi::class.java)
-                    Log.d("OkHttp", entity.link[0].toString())
+                    //for(x in entity.link)
+                        Log.d("OkHttp", entity.link.toString())
 
                 } else {
                     Log.d("OkHttp","Api Riuscita - Null")
