@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobileterminalsproject.data_models_network.ProfileModelApi2
+import com.example.mobileterminalsproject.data_models_network.ProfileModelYoutubeDownloadApi
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.*
 import org.json.JSONObject
@@ -88,10 +89,10 @@ class MainActivity : AppCompatActivity() {
         val client = OkHttpClient()
 
         val request = Request.Builder()
-            .url("https://free-nba.p.rapidapi.com/teams/1")
+            .url("https://youtube-video-download-info.p.rapidapi.com/dl?id=50VwlF8DeUQ")
             .get()
-            .addHeader("X-RapidAPI-Key", "959aee617dmsh51ae45fcec13ee1p18df9fjsnb033b4a917d7")
-            .addHeader("X-RapidAPI-Host", "free-nba.p.rapidapi.com")
+            .addHeader("X-RapidAPI-Key", "cfbc210f66msh93725be4ee82e18p14e451jsn7fcfa38e4432")
+            .addHeader("X-RapidAPI-Host", "youtube-video-download-info.p.rapidapi.com")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -107,8 +108,8 @@ class MainActivity : AppCompatActivity() {
                         Log.d("OkHttp", x.toString())
                     }
 
-                    val entity = ObjectMapper().readValue(x.toString(), ProfileModelApi2::class.java)
-                    Log.d("OkHttp", entity.city.toString())
+                    val entity = ObjectMapper().readValue(x.toString(), ProfileModelYoutubeDownloadApi::class.java)
+                    Log.d("OkHttp", entity.link[0].toString())
 
                 } else {
                     Log.d("OkHttp","Api Riuscita - Null")
