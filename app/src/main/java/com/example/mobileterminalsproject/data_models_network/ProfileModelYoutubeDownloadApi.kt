@@ -7,13 +7,13 @@ import java.lang.reflect.Constructor
 data class ProfileModelYoutubeDownloadApi (
     @SerializedName("id")
     var id: String? = "",
-    @SerializedName("allowRatings")
+    //@SerializedName("allowRatings")
     var allowRatings: String? = "",
     @SerializedName("isPrivate")
     var isPrivate: String? = "",
     @SerializedName("isUnpluggedCorpus")
     var isUnpluggedCorpus: String? = "",
-    @SerializedName("isLiveContent")
+    //@SerializedName("isLiveContent")
     var isLiveContent: String? = "",
     @SerializedName("title")
     var title: String? = "",
