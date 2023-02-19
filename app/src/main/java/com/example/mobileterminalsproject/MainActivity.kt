@@ -154,6 +154,12 @@ class MainActivity : AppCompatActivity() {
                         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
                         println(mapResponseYT.toString())
 
+                        val x = mapResponseYT["items"] as ArrayList<*>
+
+                        for(it in x)
+                            println(x.toString())
+
+
                     }
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
