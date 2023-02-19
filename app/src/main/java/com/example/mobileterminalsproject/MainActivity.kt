@@ -1,9 +1,8 @@
 package com.example.mobileterminalsproject
 
-//Jetpack Compose - okhttp3
+//Jetpack Compose - okhttp3 - Gson
 import android.os.Bundle
 import android.util.Log
-//import android.util.Size
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
@@ -22,18 +21,19 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-//import com.example.mobileterminalsproject.data_models_network.ProfileModelApi2
-//import com.example.mobileterminalsproject.data_models_network.ProfileModelYoutubeDownloadApi
-//import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
+
 var jsonObject: JSONObject? = null
+var jsonObjectYT: JSONObject? = null
 var mapResponse : Map<String,Any> = HashMap()
+var mapResponseYT: Map<String,Any> = HashMap()
 var url_var: String = ""
+var url_youtube: String = ""
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +46,15 @@ class MainActivity : AppCompatActivity() {
     // 'Composable' - Allows function components to be rendered as UI components
     @Composable
     fun Main() {
+
+        var text by remember {
+            mutableStateOf(TextFieldValue(""))
+        }
+
+        var text2 by remember {
+            mutableStateOf(TextFieldValue(""))
+        }
+
         Box(
             Modifier
                 .fillMaxWidth()
@@ -76,22 +85,6 @@ class MainActivity : AppCompatActivity() {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                    Button(
-                        onClick = {
-                            sendRequest()
-                        }
-                    ) {
-                        Text(text = "Get Data")
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                var text by remember {
-                    mutableStateOf(TextFieldValue(""))
-                }
-
                 TextField(
                     value = text,
                     onValueChange = {
@@ -111,9 +104,64 @@ class MainActivity : AppCompatActivity() {
                         Text(text = "SEARCH")
                     }
                 }
+
+                TextField(
+                    value = text2,
+                    onValueChange = {
+                        text2 = it
+                    },
+                    label = { Text(text = "SEARCH") },
+                    placeholder = { Text(text = "WRITE HERE") },
+                )
+
+                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+                    Button(
+                        onClick = {
+                            url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${text2.text}"
+                            sendRequestYoutube()
+                        }
+                    ) {
+                        Text(text = "SEARCH")
+                    }
+                }
             }
         }
     }
+
+    // dato importante --> 'videoId' --> url : https://www.youtube.com/watch?v=videoID
+    //                 --> 'immagine del video' --> url associato
+    private fun sendRequestYoutube() {
+        val client = OkHttpClient()
+
+        //val url = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=apex"
+
+        val request= Request.Builder()
+            .url(url_youtube)
+            .build()
+
+
+        client.newCall(request).enqueue(object : Callback {
+
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("OkHttp", "API failed")
+            }
+
+            override fun onResponse(call: Call, response: Response){
+                if (response.isSuccessful) {
+
+                    response.body?.let {
+                        jsonObjectYT = JSONObject(it.string())
+                        mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
+                        println(mapResponseYT.toString())
+
+                    }
+                } else {
+                    Log.d("OkHttp","API succeeded with null result")
+                }
+            }
+        })
+    }
+
 
     //"https://youtube-video-download-info.p.rapidapi.com/dl?id=7NK_JOkuSVY"
     private fun sendRequest() {
