@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -35,14 +38,33 @@ var mapResponseYT: Map<String,Any> = HashMap()
 var url_var: String = ""
 var url_youtube: String = ""
 
+
+
+
+
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
+        lifecycle.addObserver(youTubePlayerView)
+
+        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                val videoId = "S0Q4gqBUs7c"
+                youTubePlayer.loadVideo(videoId, 0f)
+            }
+        })
+
+        /*
         setContent {
             Main()
         }
+         */
     }
 
+    /*
     // 'Composable' - Allows function components to be rendered as UI components
     @Composable
     fun Main() {
@@ -157,9 +179,7 @@ class MainActivity : AppCompatActivity() {
                         val x = mapResponseYT["items"] as ArrayList<*>
 
                         for(it in x)
-                            println(x.toString())
-
-
+                            println(it.toString())
                     }
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
@@ -210,12 +230,15 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+
+
     // allows you to have a preview without emulating the device
     @Preview
     @Composable
     fun PreviewMain() {
         Main()
     }
+     */
 }
 
 
