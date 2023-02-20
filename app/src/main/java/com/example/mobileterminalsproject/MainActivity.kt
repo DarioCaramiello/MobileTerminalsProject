@@ -1,8 +1,12 @@
 package com.example.mobileterminalsproject
 
 //Jetpack Compose - okhttp3 - Gson
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
@@ -44,28 +48,34 @@ var url_youtube: String = ""
 
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
         lifecycle.addObserver(youTubePlayerView)
 
+        /*
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 val videoId = "S0Q4gqBUs7c"
                 youTubePlayer.loadVideo(videoId, 0f)
             }
         })
-
+         */
         /*
         setContent {
             Main()
         }
+
          */
+
     }
 
-    /*
+
     // 'Composable' - Allows function components to be rendered as UI components
+    /*
     @Composable
     fun Main() {
 
@@ -141,6 +151,8 @@ class MainActivity : AppCompatActivity() {
                         onClick = {
                             url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${text2.text}"
                             sendRequestYoutube()
+                            setContentView(R.layout.activity_main)
+
                         }
                     ) {
                         Text(text = "SEARCH")
@@ -150,13 +162,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+     */
+
     // dato importante --> 'videoId' --> url : https://www.youtube.com/watch?v=videoID
     //                 --> 'immagine del video' --> url associato
-    private fun sendRequestYoutube() {
+    fun sendRequestYoutube(view: View) {
+
+        val firstEditText: EditText = findViewById(R.id.first_edit_text)
+        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${firstEditText.text}"
+
+        val boxPlayer : LinearLayout = findViewById(R.id.box_player)
+        boxPlayer.visibility = View.VISIBLE
+
+
         val client = OkHttpClient()
-
-        //val url = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=apex"
-
         val request= Request.Builder()
             .url(url_youtube)
             .build()
@@ -190,7 +209,8 @@ class MainActivity : AppCompatActivity() {
 
 
     //"https://youtube-video-download-info.p.rapidapi.com/dl?id=7NK_JOkuSVY"
-    private fun sendRequest() {
+
+    fun sendRequest(view: View) {
 
         val client = OkHttpClient.Builder().build()
 
@@ -233,11 +253,13 @@ class MainActivity : AppCompatActivity() {
 
 
     // allows you to have a preview without emulating the device
+    /*
     @Preview
     @Composable
     fun PreviewMain() {
         Main()
     }
+
      */
 }
 
