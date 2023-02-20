@@ -39,8 +39,7 @@ class MainActivity : AppCompatActivity() {
         youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view1)
         lifecycle.addObserver(youTubePlayerView as LifecycleObserver)
 
-        //val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
-        //lifecycle.addObserver(youTubePlayerView)
+
         /*
         for(i in 1..30){
             val id = "R.id.youtube_player_view$i"
@@ -51,22 +50,6 @@ class MainActivity : AppCompatActivity() {
                 lifecycle.addObserver(youtubeListVideos)
             }
         }
-
-         */
-
-        /*
-        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "S0Q4gqBUs7c"
-                youTubePlayer.loadVideo(videoId, 0f)
-            }
-        })
-         */
-        /*
-        setContent {
-            Main()
-        }
-
          */
 
     }
@@ -162,12 +145,17 @@ class MainActivity : AppCompatActivity() {
 
      */
 
+
     fun beginRequest(view: View) {
         val firstPage = findViewById<LinearLayout>(R.id.first_page)
         val secondPage = findViewById<LinearLayout>(R.id.second_page)
         firstPage.visibility = View.GONE
         secondPage.visibility = View.VISIBLE
     }
+
+
+
+
 
     // dato importante --> 'videoId' --> url : https://www.youtube.com/watch?v=videoID
     //                 --> 'immagine del video' --> url associato
@@ -196,42 +184,17 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
 
                     response.body?.let {
-
-
                         jsonObjectYT = JSONObject(it.string())
                         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
-                        //println(mapResponseYT.toString())
 
                         firstVideoId = (((mapResponseYT["items"] as ArrayList<*>)[0] as LinkedTreeMap<*,*>)["id"] as LinkedTreeMap<*,*>)["videoId"].toString()
-                        //println(firstVideoId.toString())
-
-
-
-                        /*
-                        val x = mapResponseYT["items"] as ArrayList<*>
-                        for(item in x) {
-                            val itemMap = item as LinkedTreeMap<*,*>
-                            val itemMapId = itemMap["id"] as LinkedTreeMap<*,*>
-                            //println(itemMapId["videoId"].toString())
-
-                            (youTubePlayerView as YouTubePlayerView).addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                                override fun onReady(youTubePlayer: YouTubePlayer) {
-                                    val videoId = itemMapId["videoId"].toString()
-                                    println(itemMapId["videoId"].toString())
-                                    youTubePlayer.loadVideo(itemMapId["videoId"].toString(), 0.0f)
-                                }
-                            })
-                        }
-                         */
-
+                        println(firstVideoId)
                     }
 
                     (youTubePlayerView as YouTubePlayerView).addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                         override fun onReady(youTubePlayer: YouTubePlayer) {
                             youTubePlayer.loadVideo(firstVideoId, 0f)
                         }
-
-
                     })
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
@@ -242,7 +205,6 @@ class MainActivity : AppCompatActivity() {
 
 
     //"https://youtube-video-download-info.p.rapidapi.com/dl?id=7NK_JOkuSVY"
-
     fun sendRequest(view: View) {
 
         val client = OkHttpClient.Builder().build()
@@ -282,17 +244,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
-
-    // allows you to have a preview without emulating the device
-    /*
-    @Preview
-    @Composable
-    fun PreviewMain() {
-        Main()
-    }
-
-     */
 }
 
 

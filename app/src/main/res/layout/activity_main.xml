@@ -68,9 +68,8 @@
             android:onClick="beginRequest"
             android:text="@string/Begin"
             android:textColor="@color/sunset"/>
-        <!--android:background="@drawable/rounded_corner"-->
+            <!-- android:background="@drawable/rounded_corner"-->
     </LinearLayout>
-
 
     <LinearLayout
         android:orientation="vertical"
@@ -136,7 +135,7 @@
         android:translationY="200sp"
         android:orientation="vertical"
 
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:ignore="MissingConstraints"
         >
 
@@ -144,6 +143,7 @@
             android:id="@+id/youtube_player_view1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:videoId="bzrHmpll7cw"
             />
         <!--
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -322,6 +322,4 @@
             app:videoId="S0Q4gqBUs7c" />
             -->
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
