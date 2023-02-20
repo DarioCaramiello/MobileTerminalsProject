@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -26,10 +27,7 @@ var mapResponse : Map<String,Any> = HashMap()
 var mapResponseYT: Map<String,Any> = HashMap()
 var url_var: String = ""
 var url_youtube: String = ""
-
-
-
-
+var youTubePlayerView: Any? = null
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +35,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view1)
+        lifecycle.addObserver(youTubePlayerView as LifecycleObserver)
+
         //val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
         //lifecycle.addObserver(youTubePlayerView)
         /*
@@ -172,15 +174,14 @@ class MainActivity : AppCompatActivity() {
     fun sendRequestYoutube(view: View) {
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        url_youtube =
-            "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&maxResults=30&part=snippet&q=${firstEditText.text}"
-
-        val boxPlayer: LinearLayout = findViewById(R.id.box_player)
+        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${firstEditText.text}"
+        val boxPlayer : LinearLayout = findViewById(R.id.box_player)
         boxPlayer.visibility = View.VISIBLE
 
+        var firstVideoId: String = ""
 
         val client = OkHttpClient()
-        val request = Request.Builder()
+        val request= Request.Builder()
             .url(url_youtube)
             .build()
 
@@ -191,28 +192,49 @@ class MainActivity : AppCompatActivity() {
                 Log.d("OkHttp", "API failed")
             }
 
-            override fun onResponse(call: Call, response: Response) {
+            override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
-                    for (i in 1..30) {
-                        val id = "R.id.youtube_player_view${i}"
-                        val youtubeListVideos: YouTubePlayerView? = findViewById(id.toInt())
-                        if (youtubeListVideos != null) {
-                            youtubeListVideos.visibility = View.VISIBLE
-                        }
-                    }
+
                     response.body?.let {
+
+
                         jsonObjectYT = JSONObject(it.string())
-                        mapResponseYT =
-                            Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
-                        println(mapResponseYT.toString())
+                        mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
+                        //println(mapResponseYT.toString())
 
+                        firstVideoId = (((mapResponseYT["items"] as ArrayList<*>)[0] as LinkedTreeMap<*,*>)["id"] as LinkedTreeMap<*,*>)["videoId"].toString()
+                        //println(firstVideoId.toString())
+
+
+
+                        /*
                         val x = mapResponseYT["items"] as ArrayList<*>
+                        for(item in x) {
+                            val itemMap = item as LinkedTreeMap<*,*>
+                            val itemMapId = itemMap["id"] as LinkedTreeMap<*,*>
+                            //println(itemMapId["videoId"].toString())
 
-                        for (item in x)
-                            println(item.toString())
+                            (youTubePlayerView as YouTubePlayerView).addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                                override fun onReady(youTubePlayer: YouTubePlayer) {
+                                    val videoId = itemMapId["videoId"].toString()
+                                    println(itemMapId["videoId"].toString())
+                                    youTubePlayer.loadVideo(itemMapId["videoId"].toString(), 0.0f)
+                                }
+                            })
+                        }
+                         */
+
                     }
+
+                    (youTubePlayerView as YouTubePlayerView).addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                        override fun onReady(youTubePlayer: YouTubePlayer) {
+                            youTubePlayer.loadVideo(firstVideoId, 0f)
+                        }
+
+
+                    })
                 } else {
-                    Log.d("OkHttp", "API succeeded with null result")
+                    Log.d("OkHttp","API succeeded with null result")
                 }
             }
         })

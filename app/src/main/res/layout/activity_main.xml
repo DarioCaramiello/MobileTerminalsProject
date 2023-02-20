@@ -136,16 +136,16 @@
         android:translationY="200sp"
         android:orientation="vertical"
 
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        android:visibility="invisible"
+        tools:ignore="MissingConstraints"
+        >
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youtube_player_view1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:videoId="S0Q4gqBUs7c" />
+            />
+        <!--
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youtube_player_view2"
             android:layout_width="match_parent"
@@ -320,7 +320,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:videoId="S0Q4gqBUs7c" />
-
+            -->
     </LinearLayout>
 
 
