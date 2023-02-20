@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">MobileTerminalsProject</string>
+    <string name="project_name">MobileTerminalsProject</string>
+    <string name="app_name">Youtube Downloader</string>
+    <string name="SearchYt">Search on Youtube</string>
+    <string name="Write">Write here</string>
+    <string name="Search">Search</string>
+    <string name="Begin">Begin</string>
+    <string name="Description">Makes it easier to download youtube videos in every format and quality</string>
+
 </resources>

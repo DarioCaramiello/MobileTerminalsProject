@@ -7,24 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -52,9 +37,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
+        //lifecycle.addObserver(youTubePlayerView)
+        /*
+        for(i in 1..30){
+            val id = "R.id.youtube_player_view$i"
+            //val youtubeListVideos: YouTubePlayerView? = findViewById(id.)
+            //val youtubeListVideos: YouTubePlayerView? = findViewById(id.toInt())
+            val youtubeListVideos = findViewById<YouTubePlayerView>(id.toInt())
+            if (youtubeListVideos != null) {
+                lifecycle.addObserver(youtubeListVideos)
+            }
+        }
 
-        val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
-        lifecycle.addObserver(youTubePlayerView)
+         */
 
         /*
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
@@ -164,19 +160,27 @@ class MainActivity : AppCompatActivity() {
 
      */
 
+    fun beginRequest(view: View) {
+        val firstPage = findViewById<LinearLayout>(R.id.first_page)
+        val secondPage = findViewById<LinearLayout>(R.id.second_page)
+        firstPage.visibility = View.GONE
+        secondPage.visibility = View.VISIBLE
+    }
+
     // dato importante --> 'videoId' --> url : https://www.youtube.com/watch?v=videoID
     //                 --> 'immagine del video' --> url associato
     fun sendRequestYoutube(view: View) {
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${firstEditText.text}"
+        url_youtube =
+            "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&maxResults=30&part=snippet&q=${firstEditText.text}"
 
-        val boxPlayer : LinearLayout = findViewById(R.id.box_player)
+        val boxPlayer: LinearLayout = findViewById(R.id.box_player)
         boxPlayer.visibility = View.VISIBLE
 
 
         val client = OkHttpClient()
-        val request= Request.Builder()
+        val request = Request.Builder()
             .url(url_youtube)
             .build()
 
@@ -187,21 +191,28 @@ class MainActivity : AppCompatActivity() {
                 Log.d("OkHttp", "API failed")
             }
 
-            override fun onResponse(call: Call, response: Response){
+            override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-
+                    for (i in 1..30) {
+                        val id = "R.id.youtube_player_view${i}"
+                        val youtubeListVideos: YouTubePlayerView? = findViewById(id.toInt())
+                        if (youtubeListVideos != null) {
+                            youtubeListVideos.visibility = View.VISIBLE
+                        }
+                    }
                     response.body?.let {
                         jsonObjectYT = JSONObject(it.string())
-                        mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
+                        mapResponseYT =
+                            Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
                         println(mapResponseYT.toString())
 
                         val x = mapResponseYT["items"] as ArrayList<*>
 
-                        for(it in x)
-                            println(it.toString())
+                        for (item in x)
+                            println(item.toString())
                     }
                 } else {
-                    Log.d("OkHttp","API succeeded with null result")
+                    Log.d("OkHttp", "API succeeded with null result")
                 }
             }
         })
@@ -249,7 +260,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
 
 
     // allows you to have a preview without emulating the device
