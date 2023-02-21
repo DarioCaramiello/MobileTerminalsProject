@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity(){
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
         url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&q=${firstEditText.text}"
-        (findViewById<LinearLayout>(R.id.box_player)).visibility=View.VISIBLE
+        (findViewById<NestedScrollView>(R.id.scroll_view)).visibility=View.VISIBLE
         val videoIdList: MutableList<String> = mutableListOf()
 
         val client = OkHttpClient()
