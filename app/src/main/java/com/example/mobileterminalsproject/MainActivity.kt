@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
+
         youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view1)
         lifecycle.addObserver(youTubePlayerView as LifecycleObserver)
 
@@ -48,11 +48,10 @@ class MainActivity : AppCompatActivity(){
             }
         })
 
-         */
 
         for(i in 1..5) {
-            var id= "R.id.youtube_player_view$i"
-            var youtubeListVideos = findViewById<YouTubePlayerView>(id.toInt())
+            var id= getResources().getIdentifier("youtube_player_view$i", "id", getPackageName())
+            var youtubeListVideos = findViewById<YouTubePlayerView>(id)
 
             lifecycle.addObserver(youtubeListVideos as LifecycleObserver)
 
@@ -100,7 +99,6 @@ class MainActivity : AppCompatActivity(){
                         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
 
                         firstVideoId = (((mapResponseYT["items"] as ArrayList<*>)[0] as LinkedTreeMap<*,*>)["id"] as LinkedTreeMap<*,*>)["videoId"].toString()
-
 
 
                     }
