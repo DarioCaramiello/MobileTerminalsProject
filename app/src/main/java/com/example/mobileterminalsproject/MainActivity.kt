@@ -1,21 +1,24 @@
 package com.example.mobileterminalsproject
 
 //Jetpack Compose - okhttp3 - Gson
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
+
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -27,11 +30,13 @@ var mapResponse : Map<String,Any> = HashMap()
 var mapResponseYT: Map<String,Any> = HashMap()
 var url_var: String = ""
 var url_youtube: String = ""
+val defaultId = "S0Q4gqBUs7c"
 var youTubePlayerView: Any? = null
 
 
-class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+
+class MainActivity : AppCompatActivity(){
+    //@SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,112 +44,13 @@ class MainActivity : AppCompatActivity() {
         youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view1)
         lifecycle.addObserver(youTubePlayerView as LifecycleObserver)
 
-
-        /*
-        for(i in 1..30){
-            val id = "R.id.youtube_player_view$i"
-            //val youtubeListVideos: YouTubePlayerView? = findViewById(id.)
-            //val youtubeListVideos: YouTubePlayerView? = findViewById(id.toInt())
-            val youtubeListVideos = findViewById<YouTubePlayerView>(id.toInt())
-            if (youtubeListVideos != null) {
-                lifecycle.addObserver(youtubeListVideos)
+        (youTubePlayerView as YouTubePlayerView).addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(defaultId, 0f)
             }
-        }
-         */
+        })
 
     }
-
-
-    // 'Composable' - Allows function components to be rendered as UI components
-    /*
-    @Composable
-    fun Main() {
-
-        var text by remember {
-            mutableStateOf(TextFieldValue(""))
-        }
-
-        var text2 by remember {
-            mutableStateOf(TextFieldValue(""))
-        }
-
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(Color.Green)
-        ) {
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                TopAppBar(
-                    elevation = 4.dp,
-                    backgroundColor = Color.Black,
-                ) {
-
-                }
-
-                Text(
-                    text = "API Sample",
-                    style = TextStyle(
-                        fontSize = 40.sp,
-                        fontFamily = FontFamily.Cursive
-                    )
-                )
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                TextField(
-                    value = text,
-                    onValueChange = {
-                        text = it
-                    },
-                    label = { Text(text = "ENTER ID SONG") },
-                    placeholder = { Text(text = "WRITE HERE") },
-                )
-
-                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                    Button(
-                        onClick = {
-                            url_var = "https://youtube-video-download-info.p.rapidapi.com/dl?id=${text.text}"
-                            sendRequest()
-                        }
-                    ) {
-                        Text(text = "SEARCH")
-                    }
-                }
-
-                TextField(
-                    value = text2,
-                    onValueChange = {
-                        text2 = it
-                    },
-                    label = { Text(text = "SEARCH") },
-                    placeholder = { Text(text = "WRITE HERE") },
-                )
-
-                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                    Button(
-                        onClick = {
-                            url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${text2.text}"
-                            sendRequestYoutube()
-                            setContentView(R.layout.activity_main)
-
-                        }
-                    ) {
-                        Text(text = "SEARCH")
-                    }
-                }
-            }
-        }
-    }
-
-     */
-
 
     fun beginRequest(view: View) {
         val firstPage = findViewById<LinearLayout>(R.id.first_page)
@@ -154,25 +60,21 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-
+    // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
+    // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     // dato importante --> 'videoId' --> url : https://www.youtube.com/watch?v=videoID
     //                 --> 'immagine del video' --> url associato
     fun sendRequestYoutube(view: View) {
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${firstEditText.text}"
-        val boxPlayer : LinearLayout = findViewById(R.id.box_player)
-        boxPlayer.visibility = View.VISIBLE
-
+        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&q=${firstEditText.text}"
+        (findViewById<LinearLayout>(R.id.box_player)).visibility=View.VISIBLE
         var firstVideoId: String = ""
 
         val client = OkHttpClient()
         val request= Request.Builder()
             .url(url_youtube)
             .build()
-
 
         client.newCall(request).enqueue(object : Callback {
 
@@ -188,19 +90,22 @@ class MainActivity : AppCompatActivity() {
                         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
 
                         firstVideoId = (((mapResponseYT["items"] as ArrayList<*>)[0] as LinkedTreeMap<*,*>)["id"] as LinkedTreeMap<*,*>)["videoId"].toString()
-                        println(firstVideoId)
+
                     }
 
-                    (youTubePlayerView as YouTubePlayerView).addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                        override fun onReady(youTubePlayer: YouTubePlayer) {
-                            youTubePlayer.loadVideo(firstVideoId, 0f)
+                    (youTubePlayerView as YouTubePlayerView).getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
+                        override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                            println(firstVideoId)
+                            youTubePlayer.cueVideo(firstVideoId, 0f)
                         }
                     })
+
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
                 }
             }
         })
+
     }
 
 
