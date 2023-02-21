@@ -165,6 +165,7 @@
           android:id="@+id/youtube_player_view5"
           android:layout_width="match_parent"
           android:layout_height="wrap_content" />
+        <!--
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
           android:id="@+id/youtube_player_view6"
           android:layout_width="match_parent"
@@ -267,5 +268,6 @@
           android:id="@+id/youtube_player_view30"
           android:layout_width="match_parent"
           android:layout_height="wrap_content" />
+          -->
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
