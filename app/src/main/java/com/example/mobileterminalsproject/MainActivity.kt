@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
@@ -15,8 +14,6 @@ import com.google.gson.internal.LinkedTreeMap
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 import okhttp3.*
@@ -30,7 +27,7 @@ var mapResponse : Map<String,Any> = HashMap()
 var mapResponseYT: Map<String,Any> = HashMap()
 var url_var: String = ""
 var url_youtube: String = ""
-val defaultId = "S0Q4gqBUs7c"
+const val defaultId = "p2vpqKBPj4U"
 var youTubePlayerView: Any? = null
 
 
@@ -49,7 +46,6 @@ class MainActivity : AppCompatActivity(){
                 youTubePlayer.cueVideo(defaultId, 0f)
             }
         })
-
     }
 
     fun beginRequest(view: View) {
@@ -62,14 +58,12 @@ class MainActivity : AppCompatActivity(){
 
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
-    // dato importante --> 'videoId' --> url : https://www.youtube.com/watch?v=videoID
-    //                 --> 'immagine del video' --> url associato
     fun sendRequestYoutube(view: View) {
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
         url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&q=${firstEditText.text}"
         (findViewById<LinearLayout>(R.id.box_player)).visibility=View.VISIBLE
-        var firstVideoId: String = ""
+        var firstVideoId = ""
 
         val client = OkHttpClient()
         val request= Request.Builder()
