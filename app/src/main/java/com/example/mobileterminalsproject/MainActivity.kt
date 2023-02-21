@@ -10,12 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
-
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -28,30 +26,24 @@ var mapResponseYT: Map<String,Any> = HashMap()
 var url_var: String = ""
 var url_youtube: String = ""
 const val defaultId = "p2vpqKBPj4U"
-var youTubePlayerView: Any? = null
+val listView = ArrayList<YouTubePlayerView>()
 
 
 
 class MainActivity : AppCompatActivity(){
-    //@SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view1)
-        lifecycle.addObserver(youTubePlayerView as LifecycleObserver)
-
-        (youTubePlayerView as YouTubePlayerView).addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.cueVideo(defaultId, 0f)
-            }
-        })
-
+        listView.add(findViewById(R.id.youtube_player_view1))
+        listView.add(findViewById(R.id.youtube_player_view2))
+        listView.add(findViewById(R.id.youtube_player_view3))
+        listView.add(findViewById(R.id.youtube_player_view4))
+        listView.add(findViewById(R.id.youtube_player_view5))
 
         for(i in 1..5) {
-            var id= getResources().getIdentifier("youtube_player_view$i", "id", getPackageName())
-            var youtubeListVideos = findViewById<YouTubePlayerView>(id)
+            val id= getResources().getIdentifier("youtube_player_view$i", "id", getPackageName())
+            val youtubeListVideos = findViewById<YouTubePlayerView>(id)
 
             lifecycle.addObserver(youtubeListVideos as LifecycleObserver)
 
@@ -78,7 +70,7 @@ class MainActivity : AppCompatActivity(){
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
         url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&q=${firstEditText.text}"
         (findViewById<LinearLayout>(R.id.box_player)).visibility=View.VISIBLE
-        var firstVideoId = ""
+        val videoIdList: MutableList<String> = mutableListOf()
 
         val client = OkHttpClient()
         val request= Request.Builder()
@@ -98,24 +90,31 @@ class MainActivity : AppCompatActivity(){
                         jsonObjectYT = JSONObject(it.string())
                         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
 
-                        firstVideoId = (((mapResponseYT["items"] as ArrayList<*>)[0] as LinkedTreeMap<*,*>)["id"] as LinkedTreeMap<*,*>)["videoId"].toString()
 
 
+                        val items = mapResponseYT["items"] as ArrayList<*>
+                        for(i in 0..4) {
+                            val idVal = items[i] as LinkedTreeMap<*,*>
+                            val k = idVal["id"] as LinkedTreeMap<*,*>
+                            val final = k["videoId"].toString()
+                            videoIdList.add(final)
+                        }
                     }
 
-                    (youTubePlayerView as YouTubePlayerView).getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
-                        override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                            println(firstVideoId)
-                            youTubePlayer.cueVideo(firstVideoId, 0f)
-                        }
-                    })
-
+                    var count: Int = 0
+                    for(i in listView) {
+                        i.getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
+                            override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                                youTubePlayer.cueVideo(videoIdList[count], 0f)
+                                count++
+                            }
+                        })
+                    }
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
                 }
             }
         })
-
     }
 
 
