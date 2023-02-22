@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -98,6 +99,7 @@
         <EditText
             android:id="@+id/first_edit_text"
             android:textSize="15sp"
+            android:inputType="text"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:hint="@string/Write"
@@ -107,7 +109,7 @@
             android:shadowRadius="2"
             android:shadowColor="@color/paynes_gray"
             android:textAlignment="center"
-            />
+            android:autofillHints="" />
 
         <!--android:inputType="text"
              android:importantForAutofill="no"
@@ -118,53 +120,136 @@
             android:id="@+id/first_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="sendRequestYoutube"
-            android:text="@string/Search"
-            android:textSize="14sp"
+            android:backgroundTint="@color/light_green"
             android:fontFamily="sans-serif-black"
-            android:textColor="@color/black"
+            android:onClick="sendRequestYoutube"
+            android:shadowColor="#396734"
             android:shadowDx="3"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:shadowColor="#396734"
-            android:backgroundTint="@color/light_green"
+            android:text="@string/Search"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             tools:ignore="MissingConstraints" />
-
     </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:id="@+id/box_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:translationY="200sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_purple"
+            android:gravity="center"
             android:orientation="vertical"
-
+            android:translationY="200sp"
             tools:ignore="MissingConstraints">
 
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
+
+            <Button
+                android:id="@+id/button_video1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="#25AC00"
+                android:fontFamily="sans-serif-black"
+                android:onClick="sendRequest"
+                android:shadowDx="3"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="@string/Download"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
+
+            <Button
+                android:id="@+id/button_video2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#25AC00"
+                android:fontFamily="sans-serif-black"
+                android:onClick="sendRequest"
+                android:shadowDx="3"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="@string/Download"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
+
+            <Button
+                android:id="@+id/button_video3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#25AC00"
+                android:fontFamily="sans-serif-black"
+                android:onClick="sendRequest"
+                android:shadowDx="3"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="@string/Download"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
+
+            <Button
+                android:id="@+id/button_video4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#25AC00"
+                android:fontFamily="sans-serif-black"
+                android:onClick="sendRequest"
+                android:shadowDx="3"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="@string/Download"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
+
+            <Button
+                android:id="@+id/button_video5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#25AC00"
+                android:fontFamily="sans-serif-black"
+                android:onClick="sendRequest"
+                android:shadowDx="3"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="@string/Download"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
             <!--
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
               android:id="@+id/youtube_player_view6"

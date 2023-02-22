@@ -68,7 +68,6 @@ class MainActivity : AppCompatActivity(){
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
-
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
         url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&q=${firstEditText.text}"
         (findViewById<NestedScrollView>(R.id.scroll_view)).visibility=View.VISIBLE
@@ -92,18 +91,16 @@ class MainActivity : AppCompatActivity(){
                         jsonObjectYT = JSONObject(it.string())
                         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
 
-
-
                         val items = mapResponseYT["items"] as ArrayList<*>
                         for(i in 0..4) {
-                            val idVal = items[i] as LinkedTreeMap<*,*>
-                            val k = idVal["id"] as LinkedTreeMap<*,*>
-                            val final = k["videoId"].toString()
+                            val itemsVal = items[i] as LinkedTreeMap<*,*>
+                            val idVal = itemsVal["id"] as LinkedTreeMap<*,*>
+                            val final = idVal["videoId"].toString()
                             videoIdList.add(final)
                         }
                     }
 
-                    var count: Int = 0
+                    var count = 0
                     for(i in listView) {
                         i.getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
                             override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
