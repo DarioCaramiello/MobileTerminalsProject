@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(){
     fun sendRequestYoutube(view: View) {
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
         url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&q=${firstEditText.text}"
-        (findViewById<NestedScrollView>(R.id.scroll_view)).visibility=View.VISIBLE
+        (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
         val videoIdList: MutableList<String> = mutableListOf()
 
         val client = OkHttpClient()
