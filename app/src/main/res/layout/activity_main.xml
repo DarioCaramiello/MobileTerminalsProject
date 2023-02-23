@@ -115,7 +115,6 @@
              android:importantForAutofill="no"
              -->
 
-
         <Button
             android:id="@+id/first_button"
             android:layout_width="wrap_content"
@@ -359,5 +358,45 @@
               -->
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/thirdPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@color/sunset"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="hidePageDownloadLink"/>
+
+        <TextView
+            android:id="@+id/first_link"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:textAlignment="center"
+            android:text=""
+            android:autoLink="web"/>
+
+        <TextView
+            android:id="@+id/second_link"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:textAlignment="center"
+            android:text=""
+            android:autoLink="web"/>
+
+        <TextView
+            android:id="@+id/third_link"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:textAlignment="center"
+            android:text=""
+            android:autoLink="web"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

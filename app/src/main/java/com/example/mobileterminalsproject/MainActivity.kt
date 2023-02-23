@@ -1,12 +1,15 @@
 package com.example.mobileterminalsproject
 
 //Jetpack Compose - okhttp3 - Gson
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ScrollView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleObserver
@@ -19,6 +22,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
+import java.net.URL
 
 
 var jsonObject: JSONObject? = null
@@ -31,6 +35,8 @@ const val defaultId = "p2vpqKBPj4U"
 val listView = ArrayList<YouTubePlayerView>()
 val checkForButtonDownload : MutableList<Boolean> = mutableListOf()
 val videoIdList: MutableList<String> = mutableListOf()
+
+
 
 
 
@@ -74,7 +80,7 @@ class MainActivity : AppCompatActivity(){
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&q=${firstEditText.text}"
+        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${firstEditText.text}"
         (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
         val client = OkHttpClient()
@@ -166,6 +172,7 @@ class MainActivity : AppCompatActivity(){
             .addHeader("X-RapidAPI-Host", "youtube-video-download-info.p.rapidapi.com")
             .build()
 
+
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
@@ -192,6 +199,44 @@ class MainActivity : AppCompatActivity(){
                     val linkDownload2 = link["18"] as ArrayList<*>
                     val linkDownload3 = link["22"] as ArrayList<*>
 
+
+                    /*
+                    findViewById<TextView>(R.id.first_link).apply {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkDownload1[0].toString()))
+                        text = intent.toString()
+                        //startActivity(intent)
+                    }
+
+                    findViewById<TextView>(R.id.second_link).apply {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkDownload2[0].toString()))
+                        text = intent.toString()
+                        //startActivity(intent)
+                    }
+
+                    findViewById<TextView>(R.id.third_link).apply {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkDownload3[0].toString()))
+                        text = intent.toString()
+                        //startActivity(intent)
+                    }
+
+                     */
+
+
+
+                    findViewById<TextView>(R.id.first_link).text= linkDownload1[0].toString()
+                    findViewById<TextView>(R.id.second_link).text = linkDownload2[0].toString()
+                    findViewById<TextView>(R.id.third_link).text = linkDownload3[0].toString()
+
+
+
+
+                    runOnUiThread {
+                        findViewById<LinearLayout>(R.id.second_page).visibility = View.GONE
+                        findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.INVISIBLE
+                        findViewById<LinearLayout>(R.id.thirdPage).visibility = View.VISIBLE
+                    }
+
+                    /*
                     println(linkDownload1[0].toString())
                     println(linkDownload1[1].toString())
                     println(linkDownload1[2].toString())
@@ -204,6 +249,9 @@ class MainActivity : AppCompatActivity(){
                     println(linkDownload3[1].toString())
                     println(linkDownload3[2].toString())
 
+                     */
+
+                    //showPageDownloadLink(linkDownload1[0].toString(), linkDownload2[0].toString(), linkDownload3[0].toString())
 
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
@@ -211,6 +259,32 @@ class MainActivity : AppCompatActivity(){
             }
         })
     }
+
+/*
+    private fun showPageDownloadLink(link1: String, link2: String, link3: String) {
+        val x = findViewById<LinearLayout>(R.id.second_page)
+        x.visibility = View.GONE
+
+        val y = findViewById<ScrollView>(R.id.scroll_view)
+        y.visibility = View.INVISIBLE
+
+        val z = findViewById<LinearLayout>(R.id.thirdPage)
+        z.visibility = View.VISIBLE
+    }
+ */
+
+    fun hidePageDownloadLink(view: View) {
+        val x = findViewById<LinearLayout>(R.id.second_page)
+        x.visibility = View.VISIBLE
+
+        val y = findViewById<NestedScrollView>(R.id.scroll_view)
+        y.visibility = View.VISIBLE
+
+        val z = findViewById<LinearLayout>(R.id.thirdPage)
+        z.visibility = View.GONE
+    }
 }
+
+
 
 
