@@ -195,23 +195,15 @@ class MainActivity : AppCompatActivity(){
 
 
                     val link = mapResponse["link"] as LinkedTreeMap<*,*>
-                    val linkDownload1 = link["17"] as ArrayList<*>
-                    val linkDownload2 = link["18"] as ArrayList<*>
-                    val linkDownload3 = link["22"] as ArrayList<*>
+                    val linkDownload1 = link["18"] as ArrayList<*>
+                    val linkDownload2 = link["22"] as ArrayList<*>
+                    val linkDownload3 = link["140"] as ArrayList<*>
                     val linkDownload4 = link["251"] as ArrayList<*>
 
-                    findViewById<TextView>(R.id.fourth_link).text= linkDownload4[0].toString()
-                    println(linkDownload4[0].toString())
-                    println(linkDownload4[1].toString())
-                    println(linkDownload4[2].toString())
-                    println(linkDownload4[3].toString())
-                    println(linkDownload4[4].toString())
-                    /*
                     findViewById<TextView>(R.id.first_link).text= linkDownload1[0].toString()
                     findViewById<TextView>(R.id.second_link).text = linkDownload2[0].toString()
                     findViewById<TextView>(R.id.third_link).text = linkDownload3[0].toString()
-
-                     */
+                    findViewById<TextView>(R.id.fourth_link).text= linkDownload4[0].toString()
 
 
 
