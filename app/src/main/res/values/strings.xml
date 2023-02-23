@@ -7,4 +7,6 @@
     <string name="Begin">Begin</string>
     <string name="Description">Makes it easier to download youtube videos in every format and quality</string>
     <string name="Download">Download</string>
+    <string name="Back">Back</string>
+    <string name="DownloadLinks">Download Links</string>
 </resources>

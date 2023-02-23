@@ -1,19 +1,16 @@
 package com.example.mobileterminalsproject
 
-//Jetpack Compose - okhttp3 - Gson
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.internal.LinkedTreeMap
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -22,7 +19,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
-import java.net.URL
 
 
 var jsonObject: JSONObject? = null
@@ -36,10 +32,6 @@ val listView = ArrayList<YouTubePlayerView>()
 val checkForButtonDownload : MutableList<Boolean> = mutableListOf()
 val videoIdList: MutableList<String> = mutableListOf()
 
-
-
-
-
 class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +43,16 @@ class MainActivity : AppCompatActivity(){
         listView.add(findViewById(R.id.youtube_player_view4))
         listView.add(findViewById(R.id.youtube_player_view5))
 
-        for(i in 0..4)
+        for (i in 0..4)
             checkForButtonDownload.add(false)
 
-        for(i in 1..5) {
-            val id= getResources().getIdentifier("youtube_player_view$i", "id", getPackageName())
+        //loop that sets the Youtube API
+        for (i in 1..5) {
+
+            //for adding to the list of youtube videos each youtube player view (box for the youtube video).
+            //using getIdentifier for finding the view with the string letting us cycle through the
+            //views with an iterator.
+            val id = resources.getIdentifier("youtube_player_view$i", "id", packageName)
             val youtubeListVideos = findViewById<YouTubePlayerView>(id)
 
             lifecycle.addObserver(youtubeListVideos as LifecycleObserver)
@@ -98,9 +95,12 @@ class MainActivity : AppCompatActivity(){
                 if (response.isSuccessful) {
 
                     response.body?.let {
+                        //converting the string of the body in JSON Object
                         jsonObjectYT = JSONObject(it.string())
+                        //mapping the JSON Object
                         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
 
+                        //extracting all video ids and adding them to a list
                         val items = mapResponseYT["items"] as ArrayList<*>
                         for(i in 0..4) {
                             val itemsVal = items[i] as LinkedTreeMap<*,*>
@@ -110,6 +110,7 @@ class MainActivity : AppCompatActivity(){
                         }
                     }
 
+                    //setting the right ids for each Youtube player
                     var count = 0
                     for(i in listView) {
                         i.getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
@@ -126,6 +127,9 @@ class MainActivity : AppCompatActivity(){
         })
     }
 
+
+    //functions for every download button under each video that sets a boolean letting us know
+    // witch videoId must be sent to the link download API
     fun checkAndSendRequest1(view: View){
         checkForButtonDownload[0]=true
         sendRequest()
@@ -155,6 +159,8 @@ class MainActivity : AppCompatActivity(){
     //"https://youtube-video-download-info.p.rapidapi.com/dl?id=7NK_JOkuSVY"
     private fun sendRequest() {
 
+        //setting the right url + videoId based on the download button corresponding the video
+        //we want to download.
         for(i in 0..4) {
             if(checkForButtonDownload[i]) {
                 url_var = "https://youtube-video-download-info.p.rapidapi.com/dl?id=${videoIdList[i]}"
@@ -184,48 +190,28 @@ class MainActivity : AppCompatActivity(){
 
                     response.body?.let {
                         jsonObject = JSONObject(it.string())
-                        //val entity = ObjectMapper().readValue(it.string(), ProfileModelYoutubeDownloadApi::class.java)
                         mapResponse = Gson().fromJson(jsonObject.toString(), mapResponse.javaClass)
                     }
 
-                    /*
-                    for(x in link)
-                        Log.e("OkHttp", x.toString())
-
-                     */
 
                     val link = mapResponse["link"] as LinkedTreeMap<*,*>
                     val linkDownload1 = link["17"] as ArrayList<*>
                     val linkDownload2 = link["18"] as ArrayList<*>
                     val linkDownload3 = link["22"] as ArrayList<*>
+                    val linkDownload4 = link["251"] as ArrayList<*>
 
-
+                    findViewById<TextView>(R.id.fourth_link).text= linkDownload4[0].toString()
+                    println(linkDownload4[0].toString())
+                    println(linkDownload4[1].toString())
+                    println(linkDownload4[2].toString())
+                    println(linkDownload4[3].toString())
+                    println(linkDownload4[4].toString())
                     /*
-                    findViewById<TextView>(R.id.first_link).apply {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkDownload1[0].toString()))
-                        text = intent.toString()
-                        //startActivity(intent)
-                    }
-
-                    findViewById<TextView>(R.id.second_link).apply {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkDownload2[0].toString()))
-                        text = intent.toString()
-                        //startActivity(intent)
-                    }
-
-                    findViewById<TextView>(R.id.third_link).apply {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkDownload3[0].toString()))
-                        text = intent.toString()
-                        //startActivity(intent)
-                    }
-
-                     */
-
-
-
                     findViewById<TextView>(R.id.first_link).text= linkDownload1[0].toString()
                     findViewById<TextView>(R.id.second_link).text = linkDownload2[0].toString()
                     findViewById<TextView>(R.id.third_link).text = linkDownload3[0].toString()
+
+                     */
 
 
 

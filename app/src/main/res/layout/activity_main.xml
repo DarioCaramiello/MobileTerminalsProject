@@ -13,62 +13,69 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/first_page">
+        android:id="@+id/first_page"
+        android:visibility="visible">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/project_name"
-            android:background="#B7FB9284"
+            android:background="#1A000000"
             android:textAlignment="center"
-            android:paddingTop="30sp"
-            android:paddingBottom="30sp"
-            android:paddingLeft="20sp"
-            android:paddingRight="20sp"
-            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="40sp"
+            android:paddingBottom="40sp"
+            android:textColor="@color/white"
             android:textSize="30sp"
             android:fontFamily="serif"
-            android:shadowDx="3"
-            android:shadowDy="1"
+            android:shadowDx="4"
+            android:shadowDy="2"
             android:shadowRadius="2"
-            android:shadowColor="#676666" />
+            android:shadowColor="#000000" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:background="#5BFF0E0E"
-            android:padding="20sp"
+            android:paddingTop="40sp"
+            android:paddingBottom="40sp"
+            android:paddingEnd="10sp"
+            android:paddingStart="10sp"
             android:textAlignment="center"
-            android:textColor="#881600"
-            android:textSize="40sp"
-            android:fontFamily="cursive"
-            android:shadowDx="2"
-            android:shadowDy="1"
-            android:shadowRadius="1"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFC857"
+            android:textSize="50sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:shadowDx="4"
+            android:shadowDy="2"
+            android:shadowRadius="3"
             android:shadowColor="#000000" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Description"
-            android:background="#80FD1818"
-            android:padding="50sp"
+            android:padding="30sp"
+            android:background="#1A000000"
             android:textAlignment="center"
-            android:textColor="#670101"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
             android:textSize="30sp"
-            android:fontFamily="cursive"
+            android:fontFamily="sans-serif-smallcaps"
             android:shadowDx="2"
             android:shadowDy="1"
             android:shadowRadius="1"
             android:shadowColor="#000000" />
 
         <Button
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:backgroundTint="#E89C0000"
+            android:layout_margin="32dp"
+            android:backgroundTint="@color/light_green"
+            android:fontFamily="sans-serif-condensed-medium"
             android:onClick="beginRequest"
             android:text="@string/Begin"
-            android:textColor="@color/sunset"/>
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
             <!-- android:background="@drawable/rounded_corner"-->
     </LinearLayout>
 
@@ -83,32 +90,33 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:text="@string/SearchYt"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:layout_margin="10dp"
-            android:fontFamily="sans-serif-medium"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFC857"
+            android:textSize="40sp"
+            android:fontFamily="sans-serif-black"
+            android:background="#1A000000"
+            android:gravity="center"
             android:shadowDx="4"
-            android:shadowDy="1"
-            android:shadowRadius="4"
-            android:shadowColor="@color/dark_purple" />
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:shadowColor="@color/black" />
 
         <EditText
             android:id="@+id/first_edit_text"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:inputType="text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/Write"
-            android:fontFamily="sans-serif-medium"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
-            android:shadowColor="@color/paynes_gray"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/Write"
+            android:textColorHint="@color/white"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_margin="10dp"
             android:autofillHints="" />
 
         <!--android:inputType="text"
@@ -119,35 +127,37 @@
             android:id="@+id/first_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/light_green"
             android:fontFamily="sans-serif-black"
             android:onClick="sendRequestYoutube"
-            android:shadowColor="#396734"
-            android:shadowDx="3"
+            android:shadowColor="@color/black"
+            android:shadowDx="4"
             android:shadowDy="2"
             android:shadowRadius="4"
             android:text="@string/Search"
-            android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="440dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:overScrollMode="never">
 
         <LinearLayout
             android:id="@+id/box_player"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_purple"
+            android:layout_height="match_parent"
+            android:background="#B3000000"
             android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:scrollbars="vertical"
             tools:ignore="MissingConstraints">
@@ -363,38 +373,72 @@
         android:orientation="vertical"
         android:id="@+id/thirdPage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="match_parent"
         android:visibility="gone"
         android:background="@color/sunset"
         tools:ignore="MissingConstraints">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/DownloadLinks"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFC857"
+            android:textSize="40sp"
+            android:fontFamily="sans-serif-black"
+            android:background="#1A000000"
+            android:gravity="center"
+            android:shadowDx="4"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:shadowColor="@color/black" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="10sp"
+            android:text="@string/Back"
+            android:textSize="16sp"
+            android:backgroundTint="#33000000"
             android:onClick="hidePageDownloadLink"/>
 
         <TextView
             android:id="@+id/first_link"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             android:text=""
             android:autoLink="web"/>
 
         <TextView
             android:id="@+id/second_link"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             android:text=""
             android:autoLink="web"/>
 
         <TextView
             android:id="@+id/third_link"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:autoLink="web"/>
+        <TextView
+            android:id="@+id/fourth_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             android:text=""
             android:autoLink="web"/>
     </LinearLayout>
