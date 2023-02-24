@@ -30,7 +30,7 @@ var url_youtube: String = ""
 const val defaultId = "p2vpqKBPj4U"
 val listView = ArrayList<YouTubePlayerView>()
 val checkForButtonDownload : MutableList<Boolean> = mutableListOf()
-val videoIdList: MutableList<String> = mutableListOf()
+var videoIdList: MutableList<String> = mutableListOf()
 
 class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(){
 
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
-
+                    videoIdList = mutableListOf()
                     response.body?.let {
                         //converting the string of the body in JSON Object
                         jsonObjectYT = JSONObject(it.string())
