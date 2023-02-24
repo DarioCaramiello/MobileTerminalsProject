@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity(){
 
         //loop that sets the Youtube API
         for (i in 1..5) {
-
             //for adding to the list of youtube videos each youtube player view (box for the youtube video).
             //using getIdentifier for finding the view with the string letting us cycle through the
             //views with an iterator.
@@ -66,12 +65,9 @@ class MainActivity : AppCompatActivity(){
     }
 
     fun beginRequest(view: View) {
-        val firstPage = findViewById<LinearLayout>(R.id.first_page)
-        val secondPage = findViewById<LinearLayout>(R.id.second_page)
-        firstPage.visibility = View.GONE
-        secondPage.visibility = View.VISIBLE
+        findViewById<LinearLayout>(R.id.first_page).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
     }
-
 
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
@@ -102,12 +98,9 @@ class MainActivity : AppCompatActivity(){
 
                         //extracting all video ids and adding them to a list
                         val items = mapResponseYT["items"] as ArrayList<*>
-                        for(i in 0..4) {
-                            val itemsVal = items[i] as LinkedTreeMap<*,*>
-                            val idVal = itemsVal["id"] as LinkedTreeMap<*,*>
-                            val final = idVal["videoId"].toString()
-                            videoIdList.add(final)
-                        }
+
+                        for(i in 0..4)
+                            videoIdList.add((((items[i] as LinkedTreeMap<*,*>)["id"] as LinkedTreeMap<*,*>)["videoId"]).toString())
                     }
 
                     //setting the right ids for each Youtube player
@@ -158,7 +151,6 @@ class MainActivity : AppCompatActivity(){
 
     //"https://youtube-video-download-info.p.rapidapi.com/dl?id=7NK_JOkuSVY"
     private fun sendRequest() {
-
         //setting the right url + videoId based on the download button corresponding the video
         //we want to download.
         for(i in 0..4) {
@@ -170,7 +162,6 @@ class MainActivity : AppCompatActivity(){
         }
 
         val client = OkHttpClient.Builder().build()
-
         val request = Request.Builder()
             .url(url_var)
             .get()
@@ -193,44 +184,17 @@ class MainActivity : AppCompatActivity(){
                         mapResponse = Gson().fromJson(jsonObject.toString(), mapResponse.javaClass)
                     }
 
-
                     val link = mapResponse["link"] as LinkedTreeMap<*,*>
-                    val linkDownload1 = link["18"] as ArrayList<*>
-                    val linkDownload2 = link["22"] as ArrayList<*>
-                    val linkDownload3 = link["140"] as ArrayList<*>
-                    val linkDownload4 = link["251"] as ArrayList<*>
-
-                    findViewById<TextView>(R.id.first_link).text= linkDownload1[0].toString()
-                    findViewById<TextView>(R.id.second_link).text = linkDownload2[0].toString()
-                    findViewById<TextView>(R.id.third_link).text = linkDownload3[0].toString()
-                    findViewById<TextView>(R.id.fourth_link).text= linkDownload4[0].toString()
-
-
-
+                    findViewById<TextView>(R.id.first_link).text = (link["18"] as ArrayList<*>)[0].toString()
+                    findViewById<TextView>(R.id.second_link).text = (link["22"] as ArrayList<*>)[0].toString()
+                    findViewById<TextView>(R.id.third_link).text = (link["140"] as ArrayList<*>)[0].toString()
+                    findViewById<TextView>(R.id.fourth_link).text = (link["251"] as ArrayList<*>)[0].toString()
 
                     runOnUiThread {
                         findViewById<LinearLayout>(R.id.second_page).visibility = View.GONE
                         findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.INVISIBLE
                         findViewById<LinearLayout>(R.id.thirdPage).visibility = View.VISIBLE
                     }
-
-                    /*
-                    println(linkDownload1[0].toString())
-                    println(linkDownload1[1].toString())
-                    println(linkDownload1[2].toString())
-                    println("-------------------------------")
-                    println(linkDownload2[0].toString())
-                    println(linkDownload2[1].toString())
-                    println(linkDownload2[2].toString())
-                    println("-------------------------------")
-                    println(linkDownload3[0].toString())
-                    println(linkDownload3[1].toString())
-                    println(linkDownload3[2].toString())
-
-                     */
-
-                    //showPageDownloadLink(linkDownload1[0].toString(), linkDownload2[0].toString(), linkDownload3[0].toString())
-
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
                 }
@@ -238,28 +202,10 @@ class MainActivity : AppCompatActivity(){
         })
     }
 
-/*
-    private fun showPageDownloadLink(link1: String, link2: String, link3: String) {
-        val x = findViewById<LinearLayout>(R.id.second_page)
-        x.visibility = View.GONE
-
-        val y = findViewById<ScrollView>(R.id.scroll_view)
-        y.visibility = View.INVISIBLE
-
-        val z = findViewById<LinearLayout>(R.id.thirdPage)
-        z.visibility = View.VISIBLE
-    }
- */
-
     fun hidePageDownloadLink(view: View) {
-        val x = findViewById<LinearLayout>(R.id.second_page)
-        x.visibility = View.VISIBLE
-
-        val y = findViewById<NestedScrollView>(R.id.scroll_view)
-        y.visibility = View.VISIBLE
-
-        val z = findViewById<LinearLayout>(R.id.thirdPage)
-        z.visibility = View.GONE
+        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
+        findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.VISIBLE
+        findViewById<LinearLayout>(R.id.thirdPage).visibility = View.GONE
     }
 }
 
