@@ -76,7 +76,6 @@
             android:layout_gravity="center_horizontal"
             android:textSize="25sp"
             android:textColor="@color/white"/>
-            <!-- android:background="@drawable/rounded_corner"-->
     </LinearLayout>
 
     <LinearLayout
@@ -117,11 +116,8 @@
             android:textColorHint="@color/white"
             android:fontFamily="sans-serif-condensed"
             android:layout_margin="10dp"
+            android:textColor="@color/white"
             android:autofillHints="" />
-
-        <!--android:inputType="text"
-             android:importantForAutofill="no"
-             -->
 
         <Button
             android:id="@+id/first_button"
@@ -146,20 +142,16 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="440dp"
-        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"
-        android:overScrollMode="never">
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/box_player"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#B3000000"
             android:gravity="center"
-            android:layout_gravity="center_horizontal"
             android:orientation="vertical"
-            android:scrollbars="vertical"
             tools:ignore="MissingConstraints">
 
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -172,7 +164,7 @@
                 android:id="@+id/button_video1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#25AC00"
+                android:backgroundTint="@color/light_green"
                 android:fontFamily="sans-serif-black"
                 android:onClick="checkAndSendRequest1"
                 android:shadowDx="3"
@@ -192,7 +184,7 @@
                 android:id="@+id/button_video2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#25AC00"
+                android:backgroundTint="@color/light_green"
                 android:fontFamily="sans-serif-black"
                 android:onClick="checkAndSendRequest2"
                 android:shadowDx="3"
@@ -212,7 +204,7 @@
                 android:id="@+id/button_video3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#25AC00"
+                android:backgroundTint="@color/light_green"
                 android:fontFamily="sans-serif-black"
                 android:onClick="checkAndSendRequest3"
                 android:shadowDx="3"
@@ -232,7 +224,7 @@
                 android:id="@+id/button_video4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#25AC00"
+                android:backgroundTint="@color/light_green"
                 android:fontFamily="sans-serif-black"
                 android:onClick="checkAndSendRequest4"
                 android:shadowDx="3"
@@ -253,7 +245,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:backgroundTint="#25AC00"
+                android:backgroundTint="@color/light_green"
                 android:fontFamily="sans-serif-black"
                 android:onClick="checkAndSendRequest5"
                 android:shadowDx="3"
@@ -366,6 +358,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content" />
               -->
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -516,5 +509,6 @@
             android:shadowRadius="2"
             android:shadowColor="#000000"/>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
