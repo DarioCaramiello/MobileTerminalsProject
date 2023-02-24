@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
@@ -72,8 +74,15 @@ class MainActivity : AppCompatActivity(){
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
+
+        val radioGroup = findViewById<RadioGroup>(R.id.radio_group_choice)
+        val idButtonRadio = radioGroup.checkedRadioButtonId
+        val buttonRadio = findViewById<RadioButton>(idButtonRadio)
+        val textButtonRadio = buttonRadio.text.toString()
+
+
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E&part=snippet&q=${firstEditText.text}"
+        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
         (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
         val client = OkHttpClient()
@@ -101,6 +110,9 @@ class MainActivity : AppCompatActivity(){
 
                         for(i in 0..4)
                             videoIdList.add((((items[i] as LinkedTreeMap<*,*>)["id"] as LinkedTreeMap<*,*>)["videoId"]).toString())
+
+
+
                     }
 
                     //setting the right ids for each Youtube player
@@ -186,6 +198,7 @@ class MainActivity : AppCompatActivity(){
                     }
 
                     val link = mapResponse["link"] as? LinkedTreeMap<*,*>
+
 
                     if( (link?.get("18") as? ArrayList<*>)?.get(0).toString()!= "null")
                         findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()

@@ -9,6 +9,8 @@
     tools:context=".MainActivity"
     tools:ignore="MissingClass">
 
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -118,6 +120,41 @@
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:autofillHints="" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:text="Choice number of results"
+            android:fontFamily="sans-serif-black"
+            android:background="#1A000000"
+            android:textColor="#FFC857"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15"/>
+        </RadioGroup>
+
+
+
 
         <Button
             android:id="@+id/first_button"
