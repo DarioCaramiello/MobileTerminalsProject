@@ -1,15 +1,15 @@
 package com.example.mobileterminalsproject
 
 import android.annotation.SuppressLint
+import android.graphics.ColorSpace.Rgb
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
+import android.graphics.Typeface
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
@@ -238,6 +238,29 @@ class MainActivity : AppCompatActivity(){
         findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.VISIBLE
         findViewById<LinearLayout>(R.id.thirdPage).visibility = View.GONE
     }
+
+
+    fun createButtons(view: View, numButtons: Int) {
+        for(i in 1..numButtons) {
+            val button = Button(this)
+            // set button layout parameters
+            button.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            button.id = i
+            button.text = R.string.Download.toString()
+            button.setBackgroundColor(ContextCompat.getColor(this, R.color.light_green))
+            button.setTypeface(null, Typeface.BOLD)
+            button.setShadowLayer(4F,4F,2F, R.color.white)
+            button.setTextColor(ContextCompat.getColor(this, R.color.black))
+            button.textSize = 14F
+            button.setOnClickListener {
+
+            }
+        }
+    }
+
 }
 
 
