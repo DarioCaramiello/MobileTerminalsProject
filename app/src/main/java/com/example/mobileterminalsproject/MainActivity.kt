@@ -1,5 +1,6 @@
 package com.example.mobileterminalsproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -175,6 +176,7 @@ class MainActivity : AppCompatActivity(){
                 Log.d("OkHttp", "API failed")
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
 
@@ -184,19 +186,27 @@ class MainActivity : AppCompatActivity(){
                     }
 
                     val link = mapResponse["link"] as? LinkedTreeMap<*,*>
-                    findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()
-                    findViewById<TextView>(R.id.second_link).text = (link?.get("22") as? ArrayList<*>)?.get(0).toString()
-                    findViewById<TextView>(R.id.third_link).text = (link?.get("140") as? ArrayList<*>)?.get(0).toString()
-                    findViewById<TextView>(R.id.fourth_link).text = (link?.get("251") as? ArrayList<*>)?.get(0).toString()
 
-                    if(findViewById<TextView>(R.id.first_link).text == "null")
+                    if( (link?.get("18") as? ArrayList<*>)?.get(0).toString()!= "null")
+                        findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()
+                    else
                         findViewById<TextView>(R.id.first_link).text = "Link not available"
-                    if(findViewById<TextView>(R.id.second_link).text == "null")
+
+                    if( (link?.get("22") as? ArrayList<*>)?.get(0).toString()!= "null")
+                        findViewById<TextView>(R.id.second_link).text = (link?.get("22") as? ArrayList<*>)?.get(0).toString()
+                    else
                         findViewById<TextView>(R.id.second_link).text = "Link not available"
-                    if(findViewById<TextView>(R.id.third_link).text == "null")
+
+                    if( (link?.get("140") as? ArrayList<*>)?.get(0).toString() != "null")
+                        findViewById<TextView>(R.id.third_link).text = (link?.get("140") as? ArrayList<*>)?.get(0).toString()
+                    else
                         findViewById<TextView>(R.id.third_link).text = "Link not available"
-                    if(findViewById<TextView>(R.id.fourth_link).text == "null")
+
+                    if( (link?.get("251") as? ArrayList<*>)?.get(0).toString() != "null")
+                        findViewById<TextView>(R.id.fourth_link).text = (link?.get("251") as? ArrayList<*>)?.get(0).toString()
+                    else
                         findViewById<TextView>(R.id.fourth_link).text = "Link not available"
+
 
                     runOnUiThread {
                         findViewById<LinearLayout>(R.id.second_page).visibility = View.GONE
