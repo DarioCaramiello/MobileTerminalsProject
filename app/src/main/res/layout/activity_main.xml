@@ -191,6 +191,7 @@
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
+            <!--
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view1"
                 android:layout_width="match_parent"
@@ -291,7 +292,7 @@
                 android:text="@string/Download"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
-            <!--
+
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
               android:id="@+id/youtube_player_view6"
               android:layout_width="match_parent"
