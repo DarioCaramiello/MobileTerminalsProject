@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.internal.LinkedTreeMap
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -184,11 +183,20 @@ class MainActivity : AppCompatActivity(){
                         mapResponse = Gson().fromJson(jsonObject.toString(), mapResponse.javaClass)
                     }
 
-                    val link = mapResponse["link"] as LinkedTreeMap<*,*>
-                    findViewById<TextView>(R.id.first_link).text = (link["18"] as ArrayList<*>)[0].toString()
-                    findViewById<TextView>(R.id.second_link).text = (link["22"] as ArrayList<*>)[0].toString()
-                    findViewById<TextView>(R.id.third_link).text = (link["140"] as ArrayList<*>)[0].toString()
-                    findViewById<TextView>(R.id.fourth_link).text = (link["251"] as ArrayList<*>)[0].toString()
+                    val link = mapResponse["link"] as? LinkedTreeMap<*,*>
+                    findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()
+                    findViewById<TextView>(R.id.second_link).text = (link?.get("22") as? ArrayList<*>)?.get(0).toString()
+                    findViewById<TextView>(R.id.third_link).text = (link?.get("140") as? ArrayList<*>)?.get(0).toString()
+                    findViewById<TextView>(R.id.fourth_link).text = (link?.get("251") as? ArrayList<*>)?.get(0).toString()
+
+                    if(findViewById<TextView>(R.id.first_link).text == "null")
+                        findViewById<TextView>(R.id.first_link).text = "Link not available"
+                    if(findViewById<TextView>(R.id.second_link).text == "null")
+                        findViewById<TextView>(R.id.second_link).text = "Link not available"
+                    if(findViewById<TextView>(R.id.third_link).text == "null")
+                        findViewById<TextView>(R.id.third_link).text = "Link not available"
+                    if(findViewById<TextView>(R.id.fourth_link).text == "null")
+                        findViewById<TextView>(R.id.fourth_link).text = "Link not available"
 
                     runOnUiThread {
                         findViewById<LinearLayout>(R.id.second_page).visibility = View.GONE
