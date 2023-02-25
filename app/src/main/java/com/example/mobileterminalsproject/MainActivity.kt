@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(){
                         for(i in 0 until textButtonRadio.toInt()/*spinner.id*/)
                             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
 
-                        //createPlayerVideos(textButtonRadio.toInt())
+                        createPlayerVideos(textButtonRadio.toInt())
 
                     }
                 } else {
