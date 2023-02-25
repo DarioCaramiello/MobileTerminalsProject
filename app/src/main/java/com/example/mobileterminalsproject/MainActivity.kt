@@ -12,9 +12,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import okhttp3.*
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity(){
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
 
+        //setContentView(findViewById(R.id.box_player))
         val radioGroup = findViewById<RadioGroup>(R.id.radio_group_choice)
         val idButtonRadio = radioGroup.checkedRadioButtonId
         val buttonRadio = findViewById<RadioButton>(idButtonRadio)
@@ -98,22 +101,14 @@ class MainActivity : AppCompatActivity(){
                         //createPlayerVideos(prova, textButtonRadio.toInt())
                         createPlayerVideos(textButtonRadio.toInt())
 
-
-                        for(i in 1..textButtonRadio.toInt()) {
-                            //val id = resources.getIdentifier("${i+10}", "id", packageName)
-                            listView.add(findViewById<YouTubePlayerView>(i+10))
-                        }
-
-
-
                         /*
                         //loop that sets the Youtube API
                         for (i in 1..textButtonRadio.toInt()) {
                             //for adding to the list of youtube videos each youtube player view (box for the youtube video).
                             //using getIdentifier for finding the view with the string letting us cycle through the
                             //views with an iterator.
-                            val id = resources.getIdentifier("$i", "id", packageName)
-                            val youtubeListVideos = findViewById<YouTubePlayerView>(id)
+                            //val id = resources.getIdentifier("$i", "id", packageName)
+                            val youtubeListVideos = findViewById<YouTubePlayerView>(i+10)
 
                             lifecycle.addObserver(youtubeListVideos as LifecycleObserver)
 
@@ -124,20 +119,37 @@ class MainActivity : AppCompatActivity(){
                             })
                         }
 
+                         */
 
+                        /*
+
+                        for(i in 1..textButtonRadio.toInt()) {
+                            //val id = resources.getIdentifier("${i+10}", "id", packageName)
+                            //listView.add(findViewById(i+10))
+                            findViewById<YouTubePlayerView>(i+10).getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
+                                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                                    youTubePlayer.cueVideo(findViewById<YouTubePlayerView>(i+10).toString(), 0f)
+                                    //count++
+                                }
+                            })
+                        }
+
+
+                         */
+
+                        /*
                         listView.add(findViewById(R.id.youtube_player_view1))
                         listView.add(findViewById(R.id.youtube_player_view2))
                         listView.add(findViewById(R.id.youtube_player_view3))
                         listView.add(findViewById(R.id.youtube_player_view4))
                         listView.add(findViewById(R.id.youtube_player_view5))
                         */
-
-
                     }
 
 
                     //setting the right ids for each Youtube player
 
+                    /*
                     var count = 1
                     for(i in listView) {
                         i.getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
@@ -147,6 +159,8 @@ class MainActivity : AppCompatActivity(){
                             }
                         })
                     }
+
+                     */
 
 
 
@@ -273,8 +287,9 @@ class MainActivity : AppCompatActivity(){
 
     
     fun createPlayerVideos(numVideos: Int) {
-        val prova = findViewById<LinearLayout>(R.id.box_player)
+
         runOnUiThread {
+            val prova = findViewById<LinearLayout>(R.id.box_player)
             for (i in 1..numVideos) {
                 val video = YouTubePlayerView(this)
                 video.layoutParams = LinearLayout.LayoutParams(
@@ -287,9 +302,32 @@ class MainActivity : AppCompatActivity(){
                 video.layoutParams = layoutParams
                 video.id = i + 10
                 prova.addView(video)
+
+
+                //val youtubeListVideos = findViewById<YouTubePlayerView>(video.id)
+
+                lifecycle.addObserver(video as LifecycleObserver)
+
+
+                video.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.cueVideo(videoIdList[i - 1], 0f)
+                    }
+                })
+
+
+
+                /*
+                video.getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
+                    override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.cueVideo(video.id.toString(), 0f)
+                    }
+                })
+
+                 */
+
+
                 createButtons(i)
-
-
             }
         }
         /*
@@ -326,7 +364,7 @@ class MainActivity : AppCompatActivity(){
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         button.id = i
-        button.text = R.string.Download.toString()
+        button.text = "Download"
         button.setBackgroundColor(ContextCompat.getColor(this, R.color.light_green))
         button.setTypeface(null, Typeface.BOLD)
         button.setShadowLayer(4F,4F,2F, R.color.white)
