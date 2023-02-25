@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(){
 
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        //url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
+        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
 
 
         val client = OkHttpClient()
