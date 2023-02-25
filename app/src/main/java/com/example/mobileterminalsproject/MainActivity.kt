@@ -33,11 +33,6 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
-/*
-        for (i in 0..4)
-            checkForButtonDownload.add(false)
- */
     }
 
     fun beginRequest(view: View) {
@@ -45,41 +40,22 @@ class MainActivity : AppCompatActivity(){
         findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
     }
 
+
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
 
-
-        val radioGroup = findViewById<RadioGroup>(R.id.radio_group_choice)
-        val idButtonRadio = radioGroup.checkedRadioButtonId
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        val textButtonRadio = spinner.selectedItem as String
 
         /*
-        val spinner = findViewById<Spinner>(R.id.spinner)
-        spinner.adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.results,
-            android.R.layout.simple_spinner_item
-        )
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val item = parent.getItemAtPosition(position) as String
-                println(item.)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-
-         */
+        val radioGroup = findViewById<RadioGroup>(R.id.radio_group_choice)
+        val idButtonRadio = radioGroup.checkedRadioButtonId
         val buttonRadio = findViewById<RadioButton>(idButtonRadio)
         //variable for setting the maxResults (how many videos we want to visualize when we search)
-        val textButtonRadio = buttonRadio.text.toString()
+        //val textButtonRadio = buttonRadio.text.toString()
+         */
+
         (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
 
@@ -125,7 +101,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun sendRequest(i: Int) {
-        url_var = "https://youtube-video-download-info.p.rapidapi.com/dl?id=$i"
+        url_var = "https://youtube-video-download-info.p.rapidapi.com/dl?id=${videoIdList[i-1]}"
 
         val client = OkHttpClient.Builder().build()
         val request = Request.Builder()
