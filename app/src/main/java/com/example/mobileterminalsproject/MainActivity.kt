@@ -32,11 +32,13 @@ const val defaultId = "p2vpqKBPj4U"
 val listView = ArrayList<YouTubePlayerView>()
 val checkForButtonDownload : MutableList<Boolean> = mutableListOf()
 var videoIdList: MutableList<String> = mutableListOf()
+var prova: LinearLayout? = null
 
 class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        prova = findViewById(R.id.box_player)
         
 /*
         for (i in 0..4)
@@ -57,11 +59,12 @@ class MainActivity : AppCompatActivity(){
         val idButtonRadio = radioGroup.checkedRadioButtonId
         val buttonRadio = findViewById<RadioButton>(idButtonRadio)
         val textButtonRadio = buttonRadio.text.toString()
+        (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
         url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
-        (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
+
 
         val client = OkHttpClient()
         val request= Request.Builder()
@@ -92,12 +95,16 @@ class MainActivity : AppCompatActivity(){
                         }
 
 
-                        createPlayerVideos(view, textButtonRadio.toInt())
+                        //createPlayerVideos(prova, textButtonRadio.toInt())
+                        createPlayerVideos(textButtonRadio.toInt())
+
 
                         for(i in 1..textButtonRadio.toInt()) {
-                            val id = resources.getIdentifier("${i+10}", "id", packageName)
-                            listView.add(findViewById(id))
+                            //val id = resources.getIdentifier("${i+10}", "id", packageName)
+                            listView.add(findViewById<YouTubePlayerView>(i+10))
                         }
+
+
 
                         /*
                         //loop that sets the Youtube API
@@ -123,13 +130,14 @@ class MainActivity : AppCompatActivity(){
                         listView.add(findViewById(R.id.youtube_player_view3))
                         listView.add(findViewById(R.id.youtube_player_view4))
                         listView.add(findViewById(R.id.youtube_player_view5))
-                        
-                         */
+                        */
+
 
                     }
 
 
                     //setting the right ids for each Youtube player
+
                     var count = 1
                     for(i in listView) {
                         i.getYouTubePlayerWhenReady(object :YouTubePlayerCallback {
@@ -139,6 +147,7 @@ class MainActivity : AppCompatActivity(){
                             }
                         })
                     }
+
 
 
                 } else {
@@ -263,7 +272,27 @@ class MainActivity : AppCompatActivity(){
     }
 
     
-    fun createPlayerVideos(view: View, numVideos: Int) {
+    fun createPlayerVideos(numVideos: Int) {
+        val prova = findViewById<LinearLayout>(R.id.box_player)
+        runOnUiThread {
+            for (i in 1..numVideos) {
+                val video = YouTubePlayerView(this)
+                video.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+
+                val layoutParams = video.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.setMargins(20, 20, 20, 20) // set margins to 20dp on all sides
+                video.layoutParams = layoutParams
+                video.id = i + 10
+                prova.addView(video)
+                createButtons(i)
+
+
+            }
+        }
+        /*
         // Get a reference to the main thread's Looper
         val mainLooper = Looper.getMainLooper()
         // Create a Handler using the main thread's Looper
@@ -284,9 +313,12 @@ class MainActivity : AppCompatActivity(){
                 createButtons(view,i)
             }
         })
+
+         */
     }
 
-    fun createButtons(view: View, i: Int) {
+    fun createButtons(i: Int) {
+        val prova = findViewById<LinearLayout>(R.id.box_player)
         val button = Button(this)
         // set button layout parameters
         button.layoutParams = LinearLayout.LayoutParams(
@@ -303,6 +335,7 @@ class MainActivity : AppCompatActivity(){
         button.setOnClickListener {
             sendRequest(i)
         }
+        prova.addView(button)
     }
 }
 
