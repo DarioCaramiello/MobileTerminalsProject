@@ -20,7 +20,6 @@ import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
-
 var jsonObject: JSONObject? = null
 var jsonObjectYT: JSONObject? = null
 var mapResponse : Map<String,Any> = HashMap()
@@ -28,6 +27,8 @@ var mapResponseYT: Map<String,Any> = HashMap()
 var url_var: String = ""
 var url_youtube: String = ""
 var videoIdList: MutableList<String> = mutableListOf()
+var pastChoice: String = ""
+var firstExecute: Boolean = true
 
 class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,9 +45,20 @@ class MainActivity : AppCompatActivity(){
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
+        if(!firstExecute)
+            for(i in 1..pastChoice.toInt()) {
+                val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
+                val videoPlayerRemove = findViewById<YouTubePlayerView>(i+10)
+                val buttonToRemove = findViewById<Button>(i)
+                linearLayoutYoutube.removeView(videoPlayerRemove)
+                linearLayoutYoutube.removeView(buttonToRemove)
+            }
+
+        firstExecute = false
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val textButtonRadio = spinner.selectedItem as String
+        pastChoice = textButtonRadio
 
         /*
         val radioGroup = findViewById<RadioGroup>(R.id.radio_group_choice)
@@ -219,7 +231,4 @@ class MainActivity : AppCompatActivity(){
         linearLayoutYoutube.addView(button)
     }
 }
-
-
-
 
