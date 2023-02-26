@@ -5,9 +5,11 @@
     <string name="Write">Write here</string>
     <string name="Search">Search</string>
     <string name="Begin">Begin</string>
-    <string name="Description">Makes it easier to download youtube videos in every format and quality</string>
+    <string name="Description">Makes it easier to watch and download youtube videos in every format and quality</string>
     <string name="Download">Download</string>
     <string name="Back">Back</string>
     <string name="DownloadLinks">Download Links</string>
     <string name="ResultsChoice">Results</string>
+    <string name="Developers">Developers</string>
+    <string name="Names">Dario Caramiello - Simone Lanza</string>
 </resources>

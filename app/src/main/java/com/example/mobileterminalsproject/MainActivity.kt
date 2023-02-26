@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSpinner()
     }
 
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity(){
         else
             firstExecute = false
 
-        val textButtonRadio = takeSpinnerChoice()
+        val textButtonRadio = getSpinnerChoice()
         pastChoice = textButtonRadio
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
@@ -172,11 +173,14 @@ class MainActivity : AppCompatActivity(){
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
+        val layoutParams = button.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.setMargins(20, 20, 20, 20) // set margins to 20dp on all sides
+        button.layoutParams = layoutParams
         button.id = i
         button.text = resources.getText(R.string.Download)
         button.setBackgroundColor(ContextCompat.getColor(this, R.color.light_green))
-        button.setTypeface(null, Typeface.BOLD)
-        button.setShadowLayer(4F,4F,2F, R.color.white)
+        button.setTypeface(null, Typeface.NORMAL)
+        button.setShadowLayer(4F,4F,2F, R.color.black)
         button.setTextColor(ContextCompat.getColor(this, R.color.black))
         button.textSize = 14F
         button.setOnClickListener {
@@ -221,7 +225,22 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    private fun takeSpinnerChoice() : String {
+    private fun setSpinner(){
+        //set the spinner adapter
+        val spinner: Spinner = findViewById(R.id.spinner)
+
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.results,
+            R.layout.spinner_item
+        )
+
+        adapter.setDropDownViewResource(R.layout.spinner_selected_item)
+
+        spinner.adapter = adapter
+    }
+
+    private fun getSpinnerChoice() : String {
         return findViewById<Spinner>(R.id.spinner).selectedItem as String
     }
 
