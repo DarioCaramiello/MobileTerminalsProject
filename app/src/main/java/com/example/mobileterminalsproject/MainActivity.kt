@@ -36,44 +36,28 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
     }
 
-    fun beginRequest(view: View) {
-        findViewById<LinearLayout>(R.id.first_page).visibility = View.GONE
-        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
-    }
-
-
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
+
         if(!firstExecute)
-            for(i in 1..pastChoice.toInt()) {
-                val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
-                val videoPlayerRemove = findViewById<YouTubePlayerView>(i+10)
-                val buttonToRemove = findViewById<Button>(i)
-                linearLayoutYoutube.removeView(videoPlayerRemove)
-                linearLayoutYoutube.removeView(buttonToRemove)
-            }
+            cleanLayout()
+        else
+            firstExecute = false
 
-        firstExecute = false
-
+        /*
         val spinner = findViewById<Spinner>(R.id.spinner)
         val textButtonRadio = spinner.selectedItem as String
         pastChoice = textButtonRadio
-
-        /*
-        val radioGroup = findViewById<RadioGroup>(R.id.radio_group_choice)
-        val idButtonRadio = radioGroup.checkedRadioButtonId
-        val buttonRadio = findViewById<RadioButton>(idButtonRadio)
-        //variable for setting the maxResults (how many videos we want to visualize when we search)
-        //val textButtonRadio = buttonRadio.text.toString()
          */
 
-        (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
-
+        val textButtonRadio = takeSpinnerChoice()
+        pastChoice = textButtonRadio
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
         url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
 
+        (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
         val client = OkHttpClient()
         val request= Request.Builder()
@@ -87,23 +71,21 @@ class MainActivity : AppCompatActivity(){
             }
 
             override fun onResponse(call: Call, response: Response){
+
                 if (response.isSuccessful) {
+
                     videoIdList = mutableListOf()
+
                     response.body?.let {
                         //converting the string of the body in JSON Object
                         jsonObjectYT = JSONObject(it.string())
-                        //mapping the JSON Object
-                        mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
-
-                        //extracting all video ids and adding them to a list
+                        /*
                         val items = mapResponseYT["items"] as ArrayList<*>
-
-
-                        for(i in 0 until textButtonRadio.toInt()/*spinner.id*/)
+                        for(i in 0 until textButtonRadio.toInt())
                             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
-
+                         */
+                        mapResponse(textButtonRadio.toInt())
                         createPlayerVideos(textButtonRadio.toInt())
-
                     }
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
@@ -113,6 +95,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun sendRequest(i: Int) {
+
         url_var = "https://youtube-video-download-info.p.rapidapi.com/dl?id=${videoIdList[i-1]}"
 
         val client = OkHttpClient.Builder().build()
@@ -130,37 +113,14 @@ class MainActivity : AppCompatActivity(){
                 Log.d("OkHttp", "API failed")
             }
 
-            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call, response: Response){
                 if (response.isSuccessful) {
-
                     response.body?.let {
                         jsonObject = JSONObject(it.string())
                         mapResponse = Gson().fromJson(jsonObject.toString(), mapResponse.javaClass)
                     }
 
-                    val link = mapResponse["link"] as? LinkedTreeMap<*,*>
-
-                    //setting the links in the text if they are not null
-                    if( (link?.get("18") as? ArrayList<*>)?.get(0).toString()!= "null")
-                        findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()
-                    else
-                        findViewById<TextView>(R.id.first_link).text = "Link not available"
-
-                    if( (link?.get("22") as? ArrayList<*>)?.get(0).toString()!= "null")
-                        findViewById<TextView>(R.id.second_link).text = (link?.get("22") as? ArrayList<*>)?.get(0).toString()
-                    else
-                        findViewById<TextView>(R.id.second_link).text = "Link not available"
-
-                    if( (link?.get("140") as? ArrayList<*>)?.get(0).toString() != "null")
-                        findViewById<TextView>(R.id.third_link).text = (link?.get("140") as? ArrayList<*>)?.get(0).toString()
-                    else
-                        findViewById<TextView>(R.id.third_link).text = "Link not available"
-
-                    if( (link?.get("251") as? ArrayList<*>)?.get(0).toString() != "null")
-                        findViewById<TextView>(R.id.fourth_link).text = (link?.get("251") as? ArrayList<*>)?.get(0).toString()
-                    else
-                        findViewById<TextView>(R.id.fourth_link).text = "Link not available"
+                    setLinks()
 
                     //for changing the views from the main thread
                     runOnUiThread {
@@ -172,6 +132,7 @@ class MainActivity : AppCompatActivity(){
                     Log.d("OkHttp","API succeeded with null result")
                 }
             }
+
         })
     }
 
@@ -180,7 +141,6 @@ class MainActivity : AppCompatActivity(){
         findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.VISIBLE
         findViewById<LinearLayout>(R.id.thirdPage).visibility = View.GONE
     }
-
 
     fun createPlayerVideos(numVideos: Int) {
         runOnUiThread {
@@ -210,6 +170,11 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
+    fun beginRequest(view: View) {
+        findViewById<LinearLayout>(R.id.first_page).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
+    }
+
     private fun createButtons(i: Int) {
         val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
         val button = Button(this)
@@ -229,6 +194,55 @@ class MainActivity : AppCompatActivity(){
             sendRequest(i)
         }
         linearLayoutYoutube.addView(button)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setLinks() {
+        val link = mapResponse["link"] as? LinkedTreeMap<*,*>
+
+        //setting the links in the text if they are not null
+        if( (link?.get("18") as? ArrayList<*>)?.get(0).toString()!= "null")
+            findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()
+        else
+            findViewById<TextView>(R.id.first_link).text = "Link not available"
+
+        if( (link?.get("22") as? ArrayList<*>)?.get(0).toString()!= "null")
+            findViewById<TextView>(R.id.second_link).text = (link?.get("22") as? ArrayList<*>)?.get(0).toString()
+        else
+            findViewById<TextView>(R.id.second_link).text = "Link not available"
+
+        if( (link?.get("140") as? ArrayList<*>)?.get(0).toString() != "null")
+            findViewById<TextView>(R.id.third_link).text = (link?.get("140") as? ArrayList<*>)?.get(0).toString()
+        else
+            findViewById<TextView>(R.id.third_link).text = "Link not available"
+
+        if( (link?.get("251") as? ArrayList<*>)?.get(0).toString() != "null")
+            findViewById<TextView>(R.id.fourth_link).text = (link?.get("251") as? ArrayList<*>)?.get(0).toString()
+        else
+            findViewById<TextView>(R.id.fourth_link).text = "Link not available"
+    }
+
+    private fun cleanLayout() {
+        for(i in 1..pastChoice.toInt()) {
+            val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
+            val videoPlayerRemove = findViewById<YouTubePlayerView>(i+10)
+            val buttonToRemove = findViewById<Button>(i)
+            linearLayoutYoutube.removeView(videoPlayerRemove)
+            linearLayoutYoutube.removeView(buttonToRemove)
+        }
+    }
+
+    private fun takeSpinnerChoice() : String {
+        return findViewById<Spinner>(R.id.spinner).selectedItem as String
+    }
+
+    private fun mapResponse(textButtonRadio: Int) {
+        //mapping the JSON Object in a structure that follows the JSON object
+        mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
+        //extracting all video ids and adding them to a list
+        val items = mapResponseYT["items"] as ArrayList<*>
+        for(i in 0 until textButtonRadio.toInt())
+            videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
     }
 }
 
