@@ -45,12 +45,6 @@ class MainActivity : AppCompatActivity(){
         else
             firstExecute = false
 
-        /*
-        val spinner = findViewById<Spinner>(R.id.spinner)
-        val textButtonRadio = spinner.selectedItem as String
-        pastChoice = textButtonRadio
-         */
-
         val textButtonRadio = takeSpinnerChoice()
         pastChoice = textButtonRadio
 
@@ -79,11 +73,6 @@ class MainActivity : AppCompatActivity(){
                     response.body?.let {
                         //converting the string of the body in JSON Object
                         jsonObjectYT = JSONObject(it.string())
-                        /*
-                        val items = mapResponseYT["items"] as ArrayList<*>
-                        for(i in 0 until textButtonRadio.toInt())
-                            videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
-                         */
                         mapResponse(textButtonRadio.toInt())
                         createPlayerVideos(textButtonRadio.toInt())
                     }
