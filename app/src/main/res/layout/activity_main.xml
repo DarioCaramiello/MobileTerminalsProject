@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/title_gradient"
+    android:background="@drawable/background_gradient"
     tools:context=".MainActivity"
     tools:ignore="MissingClass">
 
@@ -22,15 +22,17 @@
             android:text="@string/project_name"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="40sp"
-            android:paddingBottom="40sp"
+            android:paddingTop="30sp"
+            android:paddingStart="5sp"
+            android:paddingEnd="5sp"
+            android:paddingBottom="30sp"
             android:textColor="@color/black"
             android:textSize="30sp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="sans-serif-condensed-medium"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:shadowColor="@color/black" />
+            android:shadowColor="@color/dark_red" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,8 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:paddingTop="40sp"
-            android:paddingBottom="40sp"
+            android:paddingTop="30sp"
+            android:paddingBottom="30sp"
             android:paddingEnd="10sp"
             android:paddingStart="10sp"
             android:textAlignment="textStart"
@@ -96,24 +98,18 @@
                 android:background="@color/dark_red" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <android.widget.Button
-                android:layout_width="200dp"
-                android:layout_height="70dp"
-                android:background="@drawable/rounded_corner"
-                android:backgroundTint="@color/dark_red"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:onClick="beginRequest"
-                android:text="@string/Begin"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:textColor="@color/white"
-                android:layout_marginBottom="10sp"
-                android:layout_alignParentBottom="true"/>
-        </RelativeLayout>
+        <android.widget.Button
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/rounded_corner"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:onClick="beginRequest"
+            android:text="@string/Begin"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
     </LinearLayout>
 
 
@@ -264,6 +260,7 @@
         android:layout_width="match_parent"
         android:layout_height="440dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#1A000000"
         android:visibility="gone">
 
         <LinearLayout
@@ -335,7 +332,7 @@
             android:shadowDy="1"
             android:shadowRadius="1"
             android:shadowColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:text="@string/Video1" />
 
@@ -343,15 +340,13 @@
             android:id="@+id/first_link"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:textAlignment="center"
+            android:layout_margin="10sp"
             android:layout_gravity="center_horizontal"
+            android:text="@string/defaultLink"
+            android:singleLine="true"
             android:textColor="@color/white"
-            android:text="https://one.123berlin.xyz/dl"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:autoLink="web"
-            android:textColorLink="@color/white"/>
+            android:textColorLink="@color/white" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -377,7 +372,7 @@
             android:shadowColor="@color/black"
             android:textColor="@color/black"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:text="@string/Video2" />
 
@@ -385,15 +380,13 @@
             android:id="@+id/second_link"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20sp"
-            android:textAlignment="center"
-            android:text="https://one.123berlin.xyz/dl"
+            android:layout_margin="10sp"
             android:layout_gravity="center_horizontal"
-            android:maxLines="1"
-            android:ellipsize="end"
+            android:text="@string/defaultLink"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:autoLink="web"
-            android:textColorLink="@color/white"/>
+            android:textColorLink="@color/white" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -419,7 +412,7 @@
             android:shadowColor="@color/black"
             android:textColor="@color/black"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:text="@string/Video3" />
 
@@ -427,15 +420,13 @@
             android:id="@+id/third_link"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20sp"
-            android:textAlignment="center"
-            android:text="https://one.123berlin.xyz/dl"
+            android:layout_margin="10sp"
             android:layout_gravity="center_horizontal"
-            android:maxLines="1"
-            android:ellipsize="end"
+            android:text="@string/defaultLink"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:autoLink="web"
-            android:textColorLink="@color/white"/>
+            android:textColorLink="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -462,7 +453,7 @@
             android:shadowColor="@color/black"
             android:textColor="@color/black"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:text="@string/Video4" />
         <TextView
@@ -470,11 +461,9 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
-            android:textAlignment="center"
             android:layout_gravity="center_horizontal"
-            android:text="https://one.123berlin.xyz/dl"
-            android:maxLines="1"
-            android:ellipsize="end"
+            android:text="@string/defaultLink"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:autoLink="web"
             android:textColorLink="@color/white" />

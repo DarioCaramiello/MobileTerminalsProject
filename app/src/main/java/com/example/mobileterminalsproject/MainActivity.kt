@@ -56,16 +56,16 @@ class MainActivity : AppCompatActivity(){
         else
             firstExecute = false
 
-        val textButtonRadio = getSpinnerChoice()
-        pastChoice = textButtonRadio
+        val textSpinnerSelection = getSpinnerChoice()
+        pastChoice = textSpinnerSelection
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
 
         // key expiration management for request on YouTube
         url_youtube = if(flagKey==1)
-            "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
+            "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
         else
-            "https://www.googleapis.com/youtube/v3/search?key=$secondKeyYouTube&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
+            "https://www.googleapis.com/youtube/v3/search?key=$secondKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
 
         (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
@@ -89,8 +89,8 @@ class MainActivity : AppCompatActivity(){
                     response.body?.let {
                         //converting the string of the body in JSON Object
                         jsonObjectYT = JSONObject(it.string())
-                        mapResponse(textButtonRadio.toInt())
-                        createPlayerVideos(textButtonRadio.toInt())
+                        mapResponse(textSpinnerSelection.toInt())
+                        createPlayerVideos(textSpinnerSelection.toInt())
                         progressBar.visibility = View.INVISIBLE
                     }
                 } else {
@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity(){
                 val layoutParams = video.layoutParams as ViewGroup.MarginLayoutParams
                 layoutParams.setMargins(20, 20, 20, 20) // set margins to 20dp on all sides
                 video.layoutParams = layoutParams
-                video.id = i + 10
+                video.id = i + 100
                 linearLayoutYoutube.addView(video)
 
                 lifecycle.addObserver(video as LifecycleObserver)
@@ -240,7 +240,7 @@ class MainActivity : AppCompatActivity(){
     private fun cleanLayout() {
         for(i in 1..pastChoice.toInt()) {
             val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
-            val videoPlayerRemove = findViewById<YouTubePlayerView>(i+10)
+            val videoPlayerRemove = findViewById<YouTubePlayerView>(i+100)
             val buttonToRemove = findViewById<Button>(i)
             linearLayoutYoutube.removeView(videoPlayerRemove)
             linearLayoutYoutube.removeView(buttonToRemove)
@@ -267,12 +267,12 @@ class MainActivity : AppCompatActivity(){
     }
 
 
-    private fun mapResponse(textButtonRadio: Int) {
+    private fun mapResponse(textSpinnerSelection: Int) {
         //mapping the JSON Object in a structure that follows the JSON object
         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
         //extracting all video ids and adding them to a list
         val items = mapResponseYT["items"] as ArrayList<*>
-        for(i in 0 until textButtonRadio)
+        for(i in 0 until textSpinnerSelection)
             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
     }
 

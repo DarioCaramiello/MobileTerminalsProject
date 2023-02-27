@@ -16,4 +16,5 @@
     <string name="Video2">FORMAT: <b>video/mp4</b> QUALITY: <b>720p</b></string>
     <string name="Video3">FORMAT: <b>audio/mp4</b> QUALITY: <b>high</b></string>
     <string name="Video4">FORMAT: <b>audio/webm</b> QUALITY: <b>high</b></string>
+    <string name="defaultLink">https://one.123berlin.xyz/dl</string>
 </resources>
