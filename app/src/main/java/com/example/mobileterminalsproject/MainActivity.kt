@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(){
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
         val progressBar: ProgressBar = findViewById(R.id.loading_spinner)
-        progressBar.visibility = View.VISIBLE;
+        progressBar.visibility = View.VISIBLE
 
         if(!firstExecute)
             cleanLayout()
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(){
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                progressBar.visibility = View.INVISIBLE;
+                progressBar.visibility = View.INVISIBLE
                 Log.d("OkHttp", "API failed")
             }
 
@@ -79,10 +79,10 @@ class MainActivity : AppCompatActivity(){
                         jsonObjectYT = JSONObject(it.string())
                         mapResponse(textButtonRadio.toInt())
                         createPlayerVideos(textButtonRadio.toInt())
-                        progressBar.visibility = View.INVISIBLE;
+                        progressBar.visibility = View.INVISIBLE
                     }
                 } else {
-                    progressBar.visibility = View.INVISIBLE;
+                    progressBar.visibility = View.INVISIBLE
                     Log.d("OkHttp","API succeeded with null result")
                 }
             }
