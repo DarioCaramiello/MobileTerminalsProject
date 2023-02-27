@@ -1,19 +1,19 @@
 <resources>
-    <string name="project_name">MobileTerminalsProject</string>
+    <string name="project_name">Mobile Terminals Project</string>
     <string name="app_name">Youtube Downloader</string>
     <string name="SearchYt">Search on Youtube</string>
     <string name="Write">Write here</string>
     <string name="Search">Search</string>
     <string name="Begin">Begin</string>
-    <string name="Description">Makes it easier to watch and download youtube videos in every format and quality</string>
+    <string name="Description">Makes it easier to <b>watch</b> and <b>download</b> youtube videos in every format and quality</string>
     <string name="Download">Download</string>
     <string name="Back">Back</string>
     <string name="DownloadLinks">Download Links</string>
     <string name="ResultsChoice">Results</string>
     <string name="Developers">Developers</string>
     <string name="Names">Dario Caramiello - Simone Lanza</string>
-    <string name="Video1">type: video/mp4 quality: 360p</string>
-    <string name="Video2">type: video/mp4 quality: 720p</string>
-    <string name="Video3">type: audio/mp4 quality: high</string>
-    <string name="Video4">type: audio/webm quality: high</string>
+    <string name="Video1">FORMAT: <b>video/mp4</b> QUALITY: <b>360p</b></string>
+    <string name="Video2">FORMAT: <b>video/mp4</b> QUALITY: <b>720p</b></string>
+    <string name="Video3">FORMAT: <b>audio/mp4</b> QUALITY: <b>high</b></string>
+    <string name="Video4">FORMAT: <b>audio/webm</b> QUALITY: <b>high</b></string>
 </resources>

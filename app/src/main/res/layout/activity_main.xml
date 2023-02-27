@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#282828"
+    android:background="@drawable/title_gradient"
     tools:context=".MainActivity"
     tools:ignore="MissingClass">
 
@@ -15,13 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/first_page"
-        android:visibility="visible">
+        android:visibility="gone">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/project_name"
             android:textAlignment="center"
-            android:background="@color/red"
             android:layout_gravity="center_horizontal"
             android:paddingTop="40sp"
             android:paddingBottom="40sp"
@@ -32,45 +31,76 @@
             android:shadowDy="2"
             android:shadowRadius="4"
             android:shadowColor="@color/black" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <View
+                android:layout_width="260sp"
+                android:layout_height="1dp"
+                android:layout_gravity="end"
+                android:background="@color/dark_red" />
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:paddingTop="40sp"
+            android:background=""
             android:paddingBottom="40sp"
-            android:background="@color/dark_red"
             android:paddingEnd="10sp"
             android:paddingStart="10sp"
-            android:textAlignment="center"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
+            android:textAlignment="textStart"
+            android:layout_gravity="start"
+            android:textColor="@color/dark_red"
             android:textSize="50sp"
             android:fontFamily="sans-serif-condensed-medium"
             android:shadowDx="6"
             android:shadowDy="2"
             android:shadowRadius="2"
             android:shadowColor="#000000" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <View
+                android:layout_width="260sp"
+                android:layout_height="1dp"
+                android:layout_gravity="start"
+                android:background="@color/dark_red" />
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Description"
             android:padding="30sp"
-            android:background="@color/red"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:textColor="@color/black"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end|bottom"
+            android:textColor="@color/white"
             android:textSize="30sp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="4"
-            android:shadowColor="#000000" />
+            android:fontFamily="sans-serif-thin"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:shadowColor="@color/white" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <View
+                android:layout_width="260sp"
+                android:layout_height="1dp"
+                android:layout_gravity="end"
+                android:background="@color/dark_red" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@color/red">
+            android:gravity="center">
             <android.widget.Button
                 android:layout_width="200dp"
                 android:layout_height="70dp"
@@ -96,7 +126,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:visibility="gone"
-        android:background="@color/light_black"
         tools:ignore="MissingConstraints">
 
         <TextView
@@ -105,15 +134,25 @@
             android:text="@string/SearchYt"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:textSize="35sp"
-            android:fontFamily="sans-serif-black"
-            android:background="@color/red"
+            android:textColor="@color/dark_red"
+            android:textSize="40sp"
+            android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
-            android:shadowDx="8"
-            android:shadowDy="4"
-            android:shadowRadius="1"
+            android:shadowDx="4"
+            android:shadowDy="2"
+            android:shadowRadius="4"
             android:shadowColor="#000000" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="end"
+                android:background="@color/dark_red" />
+        </LinearLayout>
 
 
         <LinearLayout
@@ -121,7 +160,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
-            android:background="#0D000000"
             android:baselineAligned="false">
 
             <LinearLayout
@@ -138,17 +176,17 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     android:hint="@string/Write"
-                    android:textColorHint="@color/white"
-                    android:backgroundTint="@color/red"
+                    android:textColorHint="@color/black"
+                    android:backgroundTint="@color/dark_red"
                     android:fontFamily="sans-serif-thin"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:autofillHints=""
-                    android:shadowDx="2"
-                    android:shadowDy="0"
-                    android:shadowRadius="0.3"
-                    android:shadowColor="@color/white" />
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:shadowColor="@color/black" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="2dp"
@@ -158,7 +196,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="45dp"
-                    android:background="@color/red" />
+                    android:background="@color/dark_red" />
             </LinearLayout>
 
             <LinearLayout
@@ -178,29 +216,20 @@
                     android:layout_gravity="center"
                     android:text="@string/ResultsChoice"
                     android:fontFamily="sans-serif-thin"
-                    android:textColor="@color/white"
-                    android:shadowDx="2"
-                    android:shadowDy="0"
-                    android:shadowRadius="0.2"
-                    android:shadowColor="@color/white"/>
-                <LinearLayout
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <View
-                        android:layout_width="5dp"
-                        android:layout_height="2dp"
-                        android:background="@color/red" />
-                </LinearLayout>
+                    android:textColor="@color/black"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:shadowColor="@color/black"/>
 
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
+                    android:paddingTop="3.5sp"
                     android:entries="@array/results"
                     android:textAlignment="center"
-                    android:backgroundTint="@color/red"/>
+                    android:backgroundTint="@color/black"/>
             </LinearLayout>
     </LinearLayout>
         <LinearLayout
@@ -242,7 +271,6 @@
             android:id="@+id/box_player"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#99000000"
             android:gravity="center"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
@@ -255,8 +283,7 @@
         android:id="@+id/thirdPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/light_black"
+        android:visibility="visible"
         tools:ignore="MissingConstraints">
 
         <TextView
@@ -265,14 +292,13 @@
             android:text="@string/DownloadLinks"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
+            android:textColor="@color/dark_red"
             android:textSize="40sp"
             android:fontFamily="sans-serif-black"
-            android:background="@color/red"
             android:gravity="center"
-            android:shadowDx="8"
-            android:shadowDy="4"
-            android:shadowRadius="1"
+            android:shadowDx="4"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:shadowColor="#000000" />
 
         <android.widget.Button
@@ -282,18 +308,28 @@
             android:background="@drawable/rounded_corner"
             android:layout_margin="10sp"
             android:text="@string/Back"
-            android:textColor="@color/red"
+            android:textColor="@color/white"
             android:textSize="18sp"
-            android:backgroundTint="#99000000"
             android:onClick="hidePageDownloadLink"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="50sp"
+            android:layout_marginBottom="25sp">
+            <View
+                android:layout_width="200sp"
+                android:layout_height="1dp"
+                android:layout_gravity="end"
+                android:background="@color/dark_red" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginEnd="20sp"
-            android:layout_marginTop="50sp"
-            android:textColor="#FFC857"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"
@@ -311,13 +347,25 @@
             android:ellipsize="end"
             android:autoLink="web"
             android:textColorLink="@color/red"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="25sp">
+            <View
+                android:layout_width="200sp"
+                android:layout_height="1dp"
+                android:layout_gravity="start"
+                android:background="@color/dark_red" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
-            android:textColor="#FFC857"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"
@@ -335,13 +383,25 @@
             android:textColor="#FF0000"
             android:autoLink="web"
             android:textColorLink="@color/red"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="25sp">
+            <View
+                android:layout_width="200sp"
+                android:layout_height="1dp"
+                android:layout_gravity="end"
+                android:background="@color/dark_red" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
-            android:textColor="#FFC857"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"
@@ -360,12 +420,25 @@
             android:autoLink="web"
             android:textColorLink="@color/red"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="25sp">
+            <View
+                android:layout_width="200sp"
+                android:layout_height="1dp"
+                android:layout_gravity="start"
+                android:background="@color/dark_red" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
-            android:textColor="#FFC857"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"
@@ -390,13 +463,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#804F0000"
                 android:textColor="@color/white"
                 android:paddingBottom="20dp"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textSize="15sp"
                 android:text="@string/Developers"
-                android:background="#33000000"
                 android:shadowDx="4"
                 android:shadowDy="2"
                 android:shadowRadius="2"

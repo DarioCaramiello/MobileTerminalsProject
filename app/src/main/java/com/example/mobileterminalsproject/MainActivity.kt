@@ -1,6 +1,8 @@
 package com.example.mobileterminalsproject
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
@@ -197,7 +199,8 @@ class MainActivity : AppCompatActivity(){
         button.layoutParams = layoutParams
         button.id = i
         button.text = resources.getText(R.string.Download)
-        button.setBackgroundColor(ContextCompat.getColor(this, R.color.light_green))
+        button.background = ResourcesCompat.getDrawable(this.resources, R.drawable.rounded_corner, null)
+        button.backgroundTintList = ColorStateList.valueOf(Color.rgb(32,191,85))
         button.setTypeface(null, Typeface.BOLD)
         button.setShadowLayer(4F,4F,2F, R.color.black)
         button.setTextColor(ContextCompat.getColor(this, R.color.black))

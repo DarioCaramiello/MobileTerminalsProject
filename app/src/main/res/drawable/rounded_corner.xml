@@ -6,10 +6,10 @@
     <corners android:radius="15dp" />
 
     <!-- Set the solid color of the button -->
-    <solid android:color="@color/red" />
+    <solid android:color="@color/dark_red" />
 
     <!-- Set the width and color of the stroke (border) around the button -->
     <stroke
-        android:width="3dp"
-        android:color="#4f0000" />
+        android:width="1dp"
+        android:color="@color/black" />
 </shape>

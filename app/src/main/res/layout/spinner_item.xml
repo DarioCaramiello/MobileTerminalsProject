@@ -6,4 +6,4 @@
     android:textSize="20sp"
     android:fontFamily="sans-serif-black"
     android:padding="5sp"
-    android:textColor="@color/red" />
+    android:textColor="@color/black" />
