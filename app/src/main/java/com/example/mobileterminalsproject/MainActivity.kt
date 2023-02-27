@@ -251,11 +251,12 @@ class MainActivity : AppCompatActivity(){
         return findViewById<Spinner>(R.id.spinner).selectedItem as String
     }
 
+
     private fun mapResponse(textButtonRadio: Int) {
         //mapping the JSON Object in a structure that follows the JSON object
         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
         //extracting all video ids and adding them to a list
-        val items = mapResponseYT["items"] as ArrayList<*>
+        val items = mapResponseYT["item"] as ArrayList<*>
         for(i in 0 until textButtonRadio)
             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
     }
