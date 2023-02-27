@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleObserver
 import com.google.gson.Gson
@@ -40,6 +41,8 @@ class MainActivity : AppCompatActivity(){
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
+        val progressBar: ProgressBar = findViewById(R.id.loading_spinner)
+        progressBar.visibility = View.VISIBLE;
 
         if(!firstExecute)
             cleanLayout()
@@ -68,7 +71,7 @@ class MainActivity : AppCompatActivity(){
             override fun onResponse(call: Call, response: Response){
 
                 if (response.isSuccessful) {
-
+                    progressBar.visibility = View.INVISIBLE;
                     videoIdList = mutableListOf()
 
                     response.body?.let {
@@ -78,6 +81,7 @@ class MainActivity : AppCompatActivity(){
                         createPlayerVideos(textButtonRadio.toInt())
                     }
                 } else {
+                    progressBar.visibility = View.INVISIBLE;
                     Log.d("OkHttp","API succeeded with null result")
                 }
             }
@@ -168,18 +172,20 @@ class MainActivity : AppCompatActivity(){
     private fun createButtons(i: Int) {
         val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
         val button = Button(this)
+
         // set button layout parameters
         button.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
+        button.background = ResourcesCompat.getDrawable(this.resources, R.drawable.rounded_corner, null)
         val layoutParams = button.layoutParams as ViewGroup.MarginLayoutParams
         layoutParams.setMargins(20, 20, 20, 20) // set margins to 20dp on all sides
         button.layoutParams = layoutParams
         button.id = i
         button.text = resources.getText(R.string.Download)
         button.setBackgroundColor(ContextCompat.getColor(this, R.color.light_green))
-        button.setTypeface(null, Typeface.NORMAL)
+        button.setTypeface(null, Typeface.BOLD)
         button.setShadowLayer(4F,4F,2F, R.color.black)
         button.setTextColor(ContextCompat.getColor(this, R.color.black))
         button.textSize = 14F
