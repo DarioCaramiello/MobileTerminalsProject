@@ -65,13 +65,13 @@ class MainActivity : AppCompatActivity(){
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
+                progressBar.visibility = View.INVISIBLE;
                 Log.d("OkHttp", "API failed")
             }
 
             override fun onResponse(call: Call, response: Response){
 
                 if (response.isSuccessful) {
-                    progressBar.visibility = View.INVISIBLE;
                     videoIdList = mutableListOf()
 
                     response.body?.let {
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(){
                         jsonObjectYT = JSONObject(it.string())
                         mapResponse(textButtonRadio.toInt())
                         createPlayerVideos(textButtonRadio.toInt())
+                        progressBar.visibility = View.INVISIBLE;
                     }
                 } else {
                     progressBar.visibility = View.INVISIBLE;

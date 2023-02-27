@@ -10,7 +10,8 @@
     <string name="Back">Back</string>
     <string name="DownloadLinks">Download Links</string>
     <string name="ResultsChoice">Results</string>
-    <string name="Developers">Developers<br/>Dario Caramiello - Simone Lanza</string>
+    <string name="Developers">Developers</string>
+    <string name="Names">Dario Caramiello - Simone Lanza</string>
     <string name="Video1">type: video/mp4 quality: 360p</string>
     <string name="Video2">type: video/mp4 quality: 720p</string>
     <string name="Video3">type: audio/mp4 quality: high</string>
