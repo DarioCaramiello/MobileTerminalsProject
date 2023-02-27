@@ -251,6 +251,7 @@ class MainActivity : AppCompatActivity(){
         return findViewById<Spinner>(R.id.spinner).selectedItem as String
     }
 
+
     private fun mapResponse(textButtonRadio: Int) {
         //mapping the JSON Object in a structure that follows the JSON object
         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
