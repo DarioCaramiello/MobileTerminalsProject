@@ -30,8 +30,8 @@ var url_youtube: String = ""
 var videoIdList: MutableList<String> = mutableListOf()
 var pastChoice: String = ""
 var firstExecute: Boolean = true
-val firstKeyYouTube: String = "AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E"
-val secondKeyYouTube: String = "AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU"
+const val firstKeyYouTube: String = "AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E"
+const val secondKeyYouTube: String = "AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU"
 // 0 -> firstKey
 // 1 -> secondKey
 var flagKey: Int = 1
@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity(){
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
 
+        // key expiration management for request on YouTube
         url_youtube = if(flagKey==1)
             "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
         else
@@ -267,7 +268,7 @@ class MainActivity : AppCompatActivity(){
         //mapping the JSON Object in a structure that follows the JSON object
         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
         //extracting all video ids and adding them to a list
-        val items = mapResponseYT["item"] as ArrayList<*>
+        val items = mapResponseYT["items"] as ArrayList<*>
         for(i in 0 until textButtonRadio)
             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
     }
