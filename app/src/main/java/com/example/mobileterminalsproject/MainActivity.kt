@@ -30,6 +30,11 @@ var url_youtube: String = ""
 var videoIdList: MutableList<String> = mutableListOf()
 var pastChoice: String = ""
 var firstExecute: Boolean = true
+val firstKeyYouTube: String = "AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E"
+val secondKeyYouTube: String = "AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU"
+// 0 -> firstKey
+// 1 -> secondKey
+var flagKey: Int = 1
 
 class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +58,11 @@ class MainActivity : AppCompatActivity(){
         pastChoice = textButtonRadio
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        url_youtube = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
+
+        url_youtube = if(flagKey==1)
+            "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
+        else
+            "https://www.googleapis.com/youtube/v3/search?key=$secondKeyYouTube&part=snippet&maxResults=$textButtonRadio&q=${firstEditText.text}"
 
         (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
@@ -83,6 +92,8 @@ class MainActivity : AppCompatActivity(){
                     }
                 } else {
                     progressBar.visibility = View.INVISIBLE
+                    changeKeyYouTube()
+                    sendRequestYoutube(view)
                     Log.d("OkHttp","API succeeded with null result")
                 }
             }
@@ -256,9 +267,15 @@ class MainActivity : AppCompatActivity(){
         //mapping the JSON Object in a structure that follows the JSON object
         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
         //extracting all video ids and adding them to a list
-        val items = mapResponseYT["items"] as ArrayList<*>
+        val items = mapResponseYT["item"] as ArrayList<*>
         for(i in 0 until textButtonRadio)
             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
     }
-}
 
+    private fun changeKeyYouTube() {
+        flagKey = if(flagKey==1)
+            0
+        else
+            1
+    }
+}
