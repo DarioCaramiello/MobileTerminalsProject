@@ -216,24 +216,36 @@ class MainActivity : AppCompatActivity(){
         val link = mapResponse["link"] as? LinkedTreeMap<*,*>
 
         //setting the links in the text if they are not null
-        if( (link?.get("18") as? ArrayList<*>)?.get(0).toString()!= "null")
-            findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()
-        else
+        if( (link?.get("18") as? ArrayList<*>)?.get(0).toString()!= "null") {
+            findViewById<TextView>(R.id.first_link).text = "https://one.123berlin.xyz/dl"
+            findViewById<TextView>(R.id.first_link).setOnClickListener() {
+                findViewById<TextView>(R.id.first_link).text = (link?.get("18") as? ArrayList<*>)?.get(0).toString()
+            }
+        } else
             findViewById<TextView>(R.id.first_link).text = "Link not available"
 
-        if( (link?.get("22") as? ArrayList<*>)?.get(0).toString()!= "null")
-            findViewById<TextView>(R.id.second_link).text = (link?.get("22") as? ArrayList<*>)?.get(0).toString()
-        else
+        if( (link?.get("22") as? ArrayList<*>)?.get(0).toString()!= "null") {
+            findViewById<TextView>(R.id.second_link).text = "https://one.123berlin.xyz/dl"
+            findViewById<TextView>(R.id.second_link).setOnClickListener() {
+                findViewById<TextView>(R.id.second_link).text = (link?.get("22") as? ArrayList<*>)?.get(0).toString()
+            }
+        } else
             findViewById<TextView>(R.id.second_link).text = "Link not available"
 
-        if( (link?.get("140") as? ArrayList<*>)?.get(0).toString() != "null")
-            findViewById<TextView>(R.id.third_link).text = (link?.get("140") as? ArrayList<*>)?.get(0).toString()
-        else
+        if( (link?.get("140") as? ArrayList<*>)?.get(0).toString() != "null") {
+            findViewById<TextView>(R.id.third_link).text = "https://one.123berlin.xyz/dl"
+            findViewById<TextView>(R.id.third_link).setOnClickListener() {
+                findViewById<TextView>(R.id.third_link).text = (link?.get("140") as? ArrayList<*>)?.get(0).toString()
+            }
+        } else
             findViewById<TextView>(R.id.third_link).text = "Link not available"
 
-        if( (link?.get("251") as? ArrayList<*>)?.get(0).toString() != "null")
-            findViewById<TextView>(R.id.fourth_link).text = (link?.get("251") as? ArrayList<*>)?.get(0).toString()
-        else
+        if( (link?.get("251") as? ArrayList<*>)?.get(0).toString() != "null") {
+            findViewById<TextView>(R.id.fourth_link).text = "https://one.123berlin.xyz/dl"
+            findViewById<TextView>(R.id.fourth_link).setOnClickListener() {
+                findViewById<TextView>(R.id.fourth_link).text = (link?.get("251") as? ArrayList<*>)?.get(0).toString()
+            }
+        } else
             findViewById<TextView>(R.id.fourth_link).text = "Link not available"
     }
 
