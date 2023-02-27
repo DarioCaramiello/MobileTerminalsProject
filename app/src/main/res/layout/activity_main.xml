@@ -47,7 +47,6 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:paddingTop="40sp"
-            android:background=""
             android:paddingBottom="40sp"
             android:paddingEnd="10sp"
             android:paddingStart="10sp"
@@ -59,7 +58,7 @@
             android:shadowDx="6"
             android:shadowDy="2"
             android:shadowRadius="2"
-            android:shadowColor="#000000" />
+            android:shadowColor="@color/black" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -317,8 +316,8 @@
             android:layout_height="1dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="50sp"
-            android:layout_marginBottom="25sp">
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="15sp">
             <View
                 android:layout_width="200sp"
                 android:layout_height="1dp"
@@ -347,17 +346,18 @@
             android:layout_margin="20dp"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
-            android:textColor="#FF0000"
+            android:textColor="@color/white"
+            android:text="https://one.123berlin.xyz/dl"
             android:maxLines="1"
             android:ellipsize="end"
             android:autoLink="web"
-            android:textColorLink="@color/red"/>
+            android:textColorLink="@color/white"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginBottom="25sp">
+            android:layout_marginBottom="15sp">
             <View
                 android:layout_width="200sp"
                 android:layout_height="1dp"
@@ -387,18 +387,19 @@
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
             android:textAlignment="center"
+            android:text="https://one.123berlin.xyz/dl"
             android:layout_gravity="center_horizontal"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="#FF0000"
+            android:textColor="@color/white"
             android:autoLink="web"
-            android:textColorLink="@color/red"/>
+            android:textColorLink="@color/white"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginBottom="25sp">
+            android:layout_marginBottom="15sp">
             <View
                 android:layout_width="200sp"
                 android:layout_height="1dp"
@@ -428,19 +429,20 @@
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
             android:textAlignment="center"
+            android:text="https://one.123berlin.xyz/dl"
             android:layout_gravity="center_horizontal"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="#FF0000"
+            android:textColor="@color/white"
             android:autoLink="web"
-            android:textColorLink="@color/red"/>
+            android:textColorLink="@color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginBottom="25sp">
+            android:layout_marginBottom="15sp">
             <View
                 android:layout_width="200sp"
                 android:layout_height="1dp"
@@ -470,11 +472,12 @@
             android:layout_margin="10sp"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
+            android:text="https://one.123berlin.xyz/dl"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="#FF0000"
+            android:textColor="@color/white"
             android:autoLink="web"
-            android:textColorLink="@color/red" />
+            android:textColorLink="@color/white" />
 
         <RelativeLayout
             android:layout_width="match_parent"
