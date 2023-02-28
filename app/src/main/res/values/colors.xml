@@ -17,4 +17,5 @@
     <color name="spinner_color">#B3FFFFFF</color>
     <color name="dark_red">#4f0000</color>
     <color name="orange">#C84C09</color>
+    <color name="light_gray">#404040</color>
 </resources>

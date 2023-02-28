@@ -3,9 +3,9 @@
     android:id="@android:id/text1"
     android:textColor="@color/black"
     android:textSize="20sp"
-    android:fontFamily="sans-serif-black"
+    android:fontFamily="@font/opensans_bold"
     android:gravity="center"
-    android:padding="7sp"
+    android:padding="4sp"
     android:layout_width="match_parent"
-    android:background="@drawable/background_spinner_gradient"
+    android:background="@drawable/background_gradient"
     android:layout_height="wrap_content" />
