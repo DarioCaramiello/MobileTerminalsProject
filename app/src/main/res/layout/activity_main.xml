@@ -35,7 +35,7 @@
             android:background="@drawable/rounded_corner"
             android:fontFamily="@font/opensans_semibold"
             android:letterSpacing=".3"
-            android:onClick="beginRequest"
+            android:onClick="fromFirstToSecondPage"
             android:text="@string/Begin"
             android:textAlignment="center"
             android:textColor="@color/white"

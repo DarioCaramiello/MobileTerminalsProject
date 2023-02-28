@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.NestedScrollView
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity(){
     // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
     // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
+
         val progressBar: ProgressBar = findViewById(R.id.loading_spinner)
         progressBar.visibility = View.VISIBLE
 
@@ -83,22 +83,18 @@ class MainActivity : AppCompatActivity(){
             }
 
             override fun onResponse(call: Call, response: Response){
-
                 if (response.isSuccessful) {
                     videoIdList = mutableListOf()
-
                     response.body?.let {
                         //converting the string of the body in JSON Object
-                        jsonObjectYT = JSONObject(it.string())
-                        mapResponse(textSpinnerSelection.toInt())
-                        createPlayerVideos(textSpinnerSelection.toInt())
-                        progressBar.visibility = View.INVISIBLE
+                        mapResponse(textSpinnerSelection.toInt(),it)
                     }
+                    createPlayerVideos(textSpinnerSelection.toInt())
+                    progressBar.visibility = View.INVISIBLE
                 } else {
                     progressBar.visibility = View.INVISIBLE
                     changeKeyYouTube()
                     sendRequestYoutube(view)
-                    Log.d("OkHttp","API succeeded with null result")
                 }
             }
         })
@@ -127,16 +123,13 @@ class MainActivity : AppCompatActivity(){
                 if (response.isSuccessful) {
                     response.body?.let {
                         jsonObject = JSONObject(it.string())
-                        mapResponse = Gson().fromJson(jsonObject.toString(), mapResponse.javaClass)
                     }
 
                     setLinks()
 
                     //for changing the views from the main thread
                     runOnUiThread {
-                        findViewById<LinearLayout>(R.id.second_page).visibility = View.GONE
-                        findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.INVISIBLE
-                        findViewById<LinearLayout>(R.id.thirdPage).visibility = View.VISIBLE
+                        fromSecondToThirdPage()
                     }
                 } else {
                     Log.d("OkHttp","API succeeded with null result")
@@ -146,43 +139,14 @@ class MainActivity : AppCompatActivity(){
         })
     }
 
-    fun hidePageDownloadLink(view: View) {
-        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
-        findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.VISIBLE
-        findViewById<LinearLayout>(R.id.thirdPage).visibility = View.GONE
-    }
-
     fun createPlayerVideos(numVideos: Int) {
         runOnUiThread {
-            val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
+            //val linearLayoutYoutube = findViewById<LinearLayout>(R.id.box_player)
             for (i in 1..numVideos) {
-                val video = YouTubePlayerView(this)
-                video.layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-
-                val layoutParams = video.layoutParams as ViewGroup.MarginLayoutParams
-                layoutParams.setMargins(50, 50, 50, 50) // set margins to 20dp on all sides
-                video.layoutParams = layoutParams
-                video.id = i + 100
-                linearLayoutYoutube.addView(video)
-
-                lifecycle.addObserver(video as LifecycleObserver)
-
-                video.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                    override fun onReady(youTubePlayer: YouTubePlayer) {
-                        youTubePlayer.cueVideo(videoIdList[i - 1], 0f)
-                    }
-                })
+                singleVideoCreation(findViewById(R.id.box_player), i)
                 createButtons(i)
             }
         }
-    }
-
-    fun beginRequest(view: View) {
-        findViewById<LinearLayout>(R.id.first_page).visibility = View.GONE
-        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
     }
 
     private fun createButtons(i: Int) {
@@ -213,8 +177,30 @@ class MainActivity : AppCompatActivity(){
         linearLayoutYoutube.addView(button)
     }
 
+    private fun singleVideoCreation(linearLayoutYoutube: LinearLayout, i: Int) {
+        val video = YouTubePlayerView(this)
+        video.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        val layoutParams = video.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.setMargins(50, 50, 50, 50) // set margins to 20dp on all sides
+        video.layoutParams = layoutParams
+        video.id = i + 100
+        linearLayoutYoutube.addView(video)
+
+        lifecycle.addObserver(video as LifecycleObserver)
+        video.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(videoIdList[i - 1], 0f)
+            }
+        })
+    }
+
     @SuppressLint("SetTextI18n")
     private fun setLinks() {
+        mapResponse = Gson().fromJson(jsonObject.toString(), mapResponse.javaClass)
         val link = mapResponse["link"] as? LinkedTreeMap<*,*>
 
         //setting the links in the text if they are not null
@@ -249,6 +235,23 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
+    fun hidePageDownloadLink(view: View) {
+        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
+        findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.VISIBLE
+        findViewById<LinearLayout>(R.id.thirdPage).visibility = View.GONE
+    }
+
+    fun fromFirstToSecondPage(view: View) {
+        findViewById<LinearLayout>(R.id.first_page).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.second_page).visibility = View.VISIBLE
+    }
+
+    private fun fromSecondToThirdPage() {
+        findViewById<LinearLayout>(R.id.second_page).visibility = View.GONE
+        findViewById<NestedScrollView>(R.id.scroll_view).visibility = View.INVISIBLE
+        findViewById<LinearLayout>(R.id.thirdPage).visibility = View.VISIBLE
+    }
+
     private fun setSpinner(){
         //set the spinner adapter
         val spinner: Spinner = findViewById(R.id.spinner)
@@ -268,8 +271,8 @@ class MainActivity : AppCompatActivity(){
         return findViewById<Spinner>(R.id.spinner).selectedItem as String
     }
 
-
-    private fun mapResponse(textSpinnerSelection: Int) {
+    private fun mapResponse(textSpinnerSelection: Int, it : ResponseBody) {
+        jsonObjectYT = JSONObject(it.string())
         //mapping the JSON Object in a structure that follows the JSON object
         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
         //extracting all video ids and adding them to a list
