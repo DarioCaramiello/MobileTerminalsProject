@@ -52,16 +52,12 @@ class MainActivity : AppCompatActivity(){
         val progressBar: ProgressBar = findViewById(R.id.loading_spinner)
         progressBar.visibility = View.VISIBLE
 
-        if(!firstExecute)
-            cleanLayout()
-        else
-            firstExecute = false
+        setFirstExecute()
 
         val textSpinnerSelection = getSpinnerChoice()
         pastChoice = textSpinnerSelection
 
         val firstEditText: EditText = findViewById(R.id.first_edit_text)
-
         // key expiration management for request on YouTube
         url_youtube = if(flagKey==1)
             "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
@@ -137,6 +133,14 @@ class MainActivity : AppCompatActivity(){
             }
 
         })
+    }
+
+
+    private fun setFirstExecute() {
+        if(!firstExecute)
+            cleanLayout()
+        else
+            firstExecute = false
     }
 
     fun createPlayerVideos(numVideos: Int) {
