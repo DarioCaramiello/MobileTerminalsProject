@@ -57,12 +57,8 @@ class MainActivity : AppCompatActivity(){
         val textSpinnerSelection = getSpinnerChoice()
         pastChoice = textSpinnerSelection
 
-        val firstEditText: EditText = findViewById(R.id.first_edit_text)
-        // key expiration management for request on YouTube
-        url_youtube = if(flagKey==1)
-            "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
-        else
-            "https://www.googleapis.com/youtube/v3/search?key=$secondKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
+        setURL(textSpinnerSelection)
+
 
         (findViewById<NestedScrollView>(R.id.scroll_view)).visibility = View.VISIBLE
 
@@ -237,6 +233,15 @@ class MainActivity : AppCompatActivity(){
             linearLayoutYoutube.removeView(videoPlayerRemove)
             linearLayoutYoutube.removeView(buttonToRemove)
         }
+    }
+
+    private fun setURL(textSpinnerSelection: String) {
+        val firstEditText: EditText = findViewById(R.id.first_edit_text)
+        // key expiration management for request on YouTube
+        url_youtube = if(flagKey==1)
+            "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
+        else
+            "https://www.googleapis.com/youtube/v3/search?key=$secondKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
     }
 
     fun hidePageDownloadLink(view: View) {
