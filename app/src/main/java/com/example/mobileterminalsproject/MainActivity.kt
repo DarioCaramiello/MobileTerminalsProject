@@ -288,63 +288,8 @@ class MainActivity : AppCompatActivity(){
 
         for(i in 0 until textSpinnerSelection) {
             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
-            if(videoIdList[i] == "null")
+            if (videoIdList[i] == "null")
                 listOfNull.add(i)
-
-            /*
-            if(videoIdList[i] == "null") {
-                // case 1 : first id null
-                if(i==0) {
-                    flag = true
-                    continue
-                } else {
-                    videoIdList.removeAt(i)
-                    videoIdList.add(videoIdList[0])
-                }
-            //resolution case1 (i==0)
-            } else if(flag) {
-                when(textSpinnerSelection) {
-                    5 -> {
-                        if(i==textSpinnerSelection-1) {
-                            videoIdList[0] = videoIdList[i]
-                            flag = false
-                        }
-                    }
-                    10  -> {
-                        if(i==textSpinnerSelection-1) {
-                            videoIdList[0] = videoIdList[i]
-                            flag = false
-                        }
-                    }
-                    20 -> {
-                        if(i==textSpinnerSelection-1) {
-                            videoIdList[0] = videoIdList[i]
-                            flag = false
-                        }
-
-                    }
-                    30 -> {
-                        if(i==textSpinnerSelection-1){
-                            videoIdList[0] = videoIdList[i]
-                        flag = false
-                        }
-                    }
-                    40 -> {
-                        if(i==textSpinnerSelection-1) {
-                            videoIdList[0] = videoIdList[i]
-                            flag = false
-                        }
-                    }
-                    50 -> {
-                        if(i==textSpinnerSelection-1) {
-                            videoIdList[0] = videoIdList[i]
-                            flag = false
-                        }
-
-                    }
-                }
-            }
-            */
         }
         if(listOfNull.isNotEmpty() && textSpinnerSelection!=50) {
 
