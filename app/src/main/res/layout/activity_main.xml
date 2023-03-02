@@ -25,7 +25,8 @@
             android:layout_gravity="center"
             android:paddingTop="80sp"
             android:paddingBottom="80sp"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:contentDescription="@string/logo" />
 
         <android.widget.Button
             android:layout_width="310sp"
@@ -197,6 +198,7 @@
                 android:id="@+id/loading_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#D02025"
                 android:layout_marginStart="10dp"
                 android:visibility="invisible" />
         </LinearLayout>
