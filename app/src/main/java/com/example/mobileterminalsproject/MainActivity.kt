@@ -23,30 +23,28 @@ import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
-var jsonObject: JSONObject? = null
-var jsonObjectYT: JSONObject? = null
-var mapResponse : Map<String,Any> = HashMap()
-var mapResponseYT: Map<String,Any> = HashMap()
-var url_var: String = ""
-var url_youtube: String = ""
-var videoIdList: MutableList<String> = mutableListOf()
-var pastChoice: String = ""
-var firstExecute: Boolean = true
-const val firstKeyYouTube: String = "AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E"
-const val secondKeyYouTube: String = "AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU"
-// 0 -> firstKey
-// 1 -> secondKey
-var flagKey: Int = 1
+private var jsonObject: JSONObject? = null
+private var jsonObjectYT: JSONObject? = null
+private var mapResponse : Map<String,Any> = HashMap()
+private var mapResponseYT: Map<String,Any> = HashMap()
+private var url_var: String = ""
+private var url_youtube: String = ""
+private var videoIdList: MutableList<String> = mutableListOf()
+private var pastChoice: String = ""
+private var firstExecute: Boolean = true
+// 0 -> firstKey  - 1 -> secondKey
+private var flagKey: Int = 1
+private const val firstKeyYouTube: String = "AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E"
+private const val secondKeyYouTube: String = "AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU"
 
 class MainActivity : AppCompatActivity(){
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSpinner()
     }
 
-    // key Simone : key=AIzaSyApV6dplDiNINpBoGFYb3yz45IvpgVzl6E
-    // key Dario : key=AIzaSyBGtNcpfb8yLAAxKGIOMJjr0XqKx_glgkU
     fun sendRequestYoutube(view: View) {
 
         val progressBar: ProgressBar = findViewById(R.id.loading_spinner)
@@ -130,7 +128,6 @@ class MainActivity : AppCompatActivity(){
 
         })
     }
-
 
     private fun setFirstExecute() {
         if(!firstExecute)
@@ -236,12 +233,11 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun setURL(textSpinnerSelection: String) {
-        val firstEditText: EditText = findViewById(R.id.first_edit_text)
         // key expiration management for request on YouTube
         url_youtube = if(flagKey==1)
-            "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
+            "https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${findViewById<EditText>(R.id.first_edit_text).text}"
         else
-            "https://www.googleapis.com/youtube/v3/search?key=$secondKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${firstEditText.text}"
+            "https://www.googleapis.com/youtube/v3/search?key=$secondKeyYouTube&part=snippet&maxResults=$textSpinnerSelection&q=${findViewById<EditText>(R.id.first_edit_text).text}"
     }
 
     fun hidePageDownloadLink(view: View) {
@@ -281,13 +277,125 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun mapResponse(textSpinnerSelection: Int, it : ResponseBody) {
+        // var flag: Boolean = false
         jsonObjectYT = JSONObject(it.string())
         //mapping the JSON Object in a structure that follows the JSON object
         mapResponseYT = Gson().fromJson(jsonObjectYT.toString(), mapResponseYT.javaClass)
         //extracting all video ids and adding them to a list
         val items = mapResponseYT["items"] as ArrayList<*>
-        for(i in 0 until textSpinnerSelection)
+        //contains indexes where in 'videoIdList' is null
+        val listOfNull  = mutableListOf<Int>()
+
+        for(i in 0 until textSpinnerSelection) {
             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
+            if(videoIdList[i] == "null")
+                listOfNull.add(i)
+
+            /*
+            if(videoIdList[i] == "null") {
+                // case 1 : first id null
+                if(i==0) {
+                    flag = true
+                    continue
+                } else {
+                    videoIdList.removeAt(i)
+                    videoIdList.add(videoIdList[0])
+                }
+            //resolution case1 (i==0)
+            } else if(flag) {
+                when(textSpinnerSelection) {
+                    5 -> {
+                        if(i==textSpinnerSelection-1) {
+                            videoIdList[0] = videoIdList[i]
+                            flag = false
+                        }
+                    }
+                    10  -> {
+                        if(i==textSpinnerSelection-1) {
+                            videoIdList[0] = videoIdList[i]
+                            flag = false
+                        }
+                    }
+                    20 -> {
+                        if(i==textSpinnerSelection-1) {
+                            videoIdList[0] = videoIdList[i]
+                            flag = false
+                        }
+
+                    }
+                    30 -> {
+                        if(i==textSpinnerSelection-1){
+                            videoIdList[0] = videoIdList[i]
+                        flag = false
+                        }
+                    }
+                    40 -> {
+                        if(i==textSpinnerSelection-1) {
+                            videoIdList[0] = videoIdList[i]
+                            flag = false
+                        }
+                    }
+                    50 -> {
+                        if(i==textSpinnerSelection-1) {
+                            videoIdList[0] = videoIdList[i]
+                            flag = false
+                        }
+
+                    }
+                }
+            }
+            */
+        }
+        if(listOfNull.isNotEmpty() && textSpinnerSelection!=50) {
+
+            var newTextSpinnerSelection = textSpinnerSelection
+
+            newTextSpinnerSelection += if(textSpinnerSelection==5)
+                5
+            else
+                10
+
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url("https://www.googleapis.com/youtube/v3/search?key=$firstKeyYouTube&part=snippet&maxResults=${newTextSpinnerSelection}&q=${findViewById<EditText>(R.id.first_edit_text).text}")
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.d("OkHttp", "API failed")
+                }
+
+                override fun onResponse(call: Call, response: Response){
+                    if (response.isSuccessful) {
+                        var jsonObjectYTSecond: JSONObject?
+                        var mapResponseYTSecond: Map<String,Any> = HashMap()
+
+                        response.body?.let {
+                            jsonObjectYTSecond = JSONObject(it.string())
+                            mapResponseYTSecond = Gson().fromJson(jsonObjectYTSecond.toString(), mapResponseYTSecond.javaClass)
+                            val itemsRunTime = mapResponseYTSecond["items"] as ArrayList<*>
+                            val countNull = listOfNull.size
+                            var countRunTimeNull = 0
+
+                            for(i in textSpinnerSelection until textSpinnerSelection + 10) {
+                                videoIdList[listOfNull[countRunTimeNull]] = (((itemsRunTime[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString()
+                                countRunTimeNull+=1
+                                if(countRunTimeNull<=countNull)
+                                    break
+                            }
+
+                            for(i in 0 until textSpinnerSelection)
+                                println(videoIdList[i])
+                        }
+
+                    } else {
+                        Log.d("OkHttp", "API response is null")
+                        changeKeyYouTube()
+                    }
+                }
+            })
+        }
     }
 
     private fun changeKeyYouTube() {
