@@ -378,7 +378,7 @@ class MainActivity : AppCompatActivity(){
                             val countNull = listOfNull.size
                             var countRunTimeNull = 0
 
-                            for(i in textSpinnerSelection until textSpinnerSelection + 10) {
+                            for(i in textSpinnerSelection until newTextSpinnerSelection) {
                                 videoIdList[listOfNull[countRunTimeNull]] = (((itemsRunTime[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString()
                                 countRunTimeNull+=1
                                 if(countRunTimeNull<=countNull)
