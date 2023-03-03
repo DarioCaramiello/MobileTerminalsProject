@@ -329,11 +329,7 @@ class MainActivity : AppCompatActivity(){
                                 if(countRunTimeNull==countNull)
                                     break
                             }
-
-                            for(i in 0 until textSpinnerSelection)
-                                println(videoIdList[i])
                         }
-
                     } else {
                         Log.d("OkHttp", "API response is null")
                         changeKeyYouTube()
