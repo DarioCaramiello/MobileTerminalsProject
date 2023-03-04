@@ -288,7 +288,7 @@ class MainActivity : AppCompatActivity(){
 
         for(i in 0 until textSpinnerSelection) {
             videoIdList.add((((items[i] as LinkedTreeMap<*, *>)["id"] as LinkedTreeMap<*, *>)["videoId"]).toString())
-            if(videoIdList[i] == "null")
+            if (videoIdList[i] == "null")
                 listOfNull.add(i)
         }
         if(listOfNull.isNotEmpty() && textSpinnerSelection!=50) {
@@ -329,11 +329,7 @@ class MainActivity : AppCompatActivity(){
                                 if(countRunTimeNull==countNull)
                                     break
                             }
-
-                            for(i in 0 until textSpinnerSelection)
-                                println(videoIdList[i])
                         }
-
                     } else {
                         Log.d("OkHttp", "API response is null")
                         changeKeyYouTube()
